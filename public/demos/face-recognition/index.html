@@ -1,802 +1,1752 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>DBU Smart Face Recognition Attendance — Enterprise Biometric System</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg-dark: #070d18;
-      --card-bg: #0f172a;
-      --border-color: #1e293b;
-      --cyan: #06b6d4;
-      --cyan-glow: rgba(6, 182, 212, 0.3);
-      --emerald: #10b981;
-      --amber: #f59e0b;
-      --rose: #f43f5e;
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      background: var(--bg-dark);
-      color: var(--text-main);
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DBU Smart FaceAI — Enterprise Biometric Attendance Suite</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap 5.3 & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <style>
+        :root {
+            --bg-dark: #0a0e17;
+            --bg-surface: #111827;
+            --bg-card: #182234;
+            --bg-card-hover: #1f2c42;
+            --border-color: #26334a;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --accent-emerald: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-rose: #ef4444;
+            --accent-purple: #8b5cf6;
+            --sidebar-width: 270px;
+        }
 
-    /* Top Portfolio Banner */
-    .portfolio-nav {
-      background: #020617;
-      border-bottom: 1px solid var(--border-color);
-      padding: 10px 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 13px;
-    }
-    .portfolio-nav a {
-      color: var(--cyan);
-      text-decoration: none;
-      font-weight: 700;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .portfolio-nav a:hover { text-decoration: underline; }
-    .badge-engine {
-      background: rgba(16, 185, 129, 0.15);
-      border: 1px solid rgba(16, 185, 129, 0.4);
-      color: #34d399;
-      padding: 3px 12px;
-      border-radius: 9999px;
-      font-size: 11px;
-      font-family: 'JetBrains Mono', monospace;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .indicator-pulse {
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      background: #10b981;
-      box-shadow: 0 0 8px #10b981;
-      animation: pulseAnim 1.8s infinite;
-    }
-    @keyframes pulseAnim { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.3; transform: scale(0.85); } }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
 
-    /* Header */
-    header {
-      padding: 24px 24px 16px;
-      max-width: 1360px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 16px;
-    }
-    .system-title {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    .system-emblem {
-      width: 44px;
-      height: 44px;
-      border-radius: 10px;
-      background: linear-gradient(135deg, #0284c7, #06b6d4);
-      display: grid;
-      place-items: center;
-      color: white;
-      font-weight: 900;
-      font-size: 20px;
-      box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
-    }
-    .system-title h1 {
-      font-size: 20px;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-    }
-    .system-title p {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 2px;
-    }
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .lecture-select {
-      background: #0f172a;
-      border: 1px solid #334155;
-      color: #e2e8f0;
-      padding: 8px 14px;
-      border-radius: 8px;
-      font-size: 12px;
-      font-weight: 600;
-      outline: none;
-    }
-    .btn-export-pdf {
-      background: #1e293b;
-      border: 1px solid #334155;
-      color: #38bdf8;
-      padding: 8px 16px;
-      border-radius: 8px;
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      transition: all .2s;
-    }
-    .btn-export-pdf:hover { background: #334155; color: white; }
+        /* Top Portfolio Link Bar */
+        .portfolio-topbar {
+            background: #050811;
+            border-bottom: 1px solid var(--border-color);
+            padding: 8px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            position: sticky;
+            top: 0;
+            z-index: 1050;
+        }
+        .portfolio-topbar a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .portfolio-topbar a:hover { text-decoration: underline; }
+        .engine-pill {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.35);
+            color: #34d399;
+            padding: 2px 10px;
+            border-radius: 9999px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .engine-dot { width: 6px; height: 6px; border-radius: 50%; background: #10b981; animation: pulseDot 1.8s infinite; }
+        @keyframes pulseDot { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.3; } }
 
-    /* Main Container */
-    .container {
-      max-width: 1360px;
-      margin: 0 auto;
-      padding: 0 24px 40px;
-    }
+        /* Role Switcher Pill */
+        .role-pill {
+            background: rgba(59, 130, 246, 0.15);
+            border: 1px solid rgba(59, 130, 246, 0.4);
+            color: #93c5fd;
+            border-radius: 20px;
+            padding: 3px 10px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+        .role-pill:hover { background: rgba(59, 130, 246, 0.25); color: #fff; }
 
-    /* Metric Cards */
-    .metrics-row {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
-      margin-bottom: 24px;
-    }
-    .metric-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 16px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .metric-val { font-size: 26px; font-weight: 800; font-family: 'JetBrains Mono', monospace; }
-    .metric-label { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
-    .metric-pill { font-size: 11px; font-family: 'JetBrains Mono', monospace; padding: 4px 8px; border-radius: 6px; font-weight: 700; }
+        /* App Layout */
+        .app-layout {
+            display: flex;
+            min-height: calc(100vh - 41px);
+        }
 
-    /* Main Grid */
-    .content-grid {
-      display: grid;
-      grid-template-columns: 1.1fr 1fr;
-      gap: 24px;
-    }
+        /* Sidebar */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--bg-surface);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 41px;
+            bottom: 0;
+            left: 0;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+        .sidebar-header {
+            padding: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .logo-box {
+            width: 44px; height: 44px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #3b82f6, #06b6d4);
+            display: grid;
+            place-items: center;
+            font-size: 1.35rem;
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(6, 182, 212, 0.35);
+        }
+        .brand-text { display: flex; flex-direction: column; }
+        .brand-title { font-size: 1.15rem; font-weight: 800; color: var(--text-primary); letter-spacing: -0.02em; }
+        .brand-sub { font-size: 0.72rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; }
 
-    .panel-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 16px;
-      padding: 22px;
-    }
-    .panel-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-    }
-    .panel-title {
-      font-size: 15px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+        .sidebar-menu {
+            padding: 1rem 0.75rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            overflow-y: auto;
+        }
+        .menu-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+            padding: 0.4rem 0.6rem;
+        }
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.65rem 0.85rem;
+            border-radius: 10px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .menu-item:hover { color: var(--text-primary); background-color: rgba(255, 255, 255, 0.05); }
+        .menu-item.active {
+            color: #fff;
+            background: linear-gradient(90deg, rgba(59, 130, 246, 0.2), rgba(6, 182, 212, 0.1));
+            border-left: 3px solid var(--accent-cyan);
+            font-weight: 600;
+        }
+        .menu-item.scanner-highlight {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            color: #34d399;
+        }
+        .menu-item.scanner-highlight.active {
+            background: linear-gradient(90deg, rgba(16, 185, 129, 0.25), rgba(6, 182, 212, 0.15));
+            border-color: #34d399;
+            color: #fff;
+        }
+        .pulse-dot {
+            width: 7px; height: 7px; border-radius: 50%; background: #10b981; margin-left: auto;
+            box-shadow: 0 0 8px #10b981; animation: pulseDot 1.8s infinite;
+        }
 
-    /* Optical Camera Viewport */
-    .camera-viewport {
-      width: 100%;
-      height: 380px;
-      background: #020617;
-      border: 2px solid #334155;
-      border-radius: 12px;
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transform: scaleX(-1);
-    }
-    .face-reticle {
-      position: absolute;
-      width: 220px;
-      height: 250px;
-      border: 2px solid #06b6d4;
-      border-radius: 12px;
-      box-shadow: 0 0 25px rgba(6, 182, 212, 0.4), inset 0 0 15px rgba(6, 182, 212, 0.2);
-      pointer-events: none;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 10px;
-      transition: all 0.3s;
-    }
-    .laser-line {
-      position: absolute;
-      top: 0; left: 0; right: 0; height: 2px;
-      background: #38bdf8;
-      box-shadow: 0 0 12px #38bdf8;
-      animation: scanLaser 2.4s linear infinite;
-    }
-    @keyframes scanLaser {
-      0% { top: 5%; opacity: 0.8; }
-      50% { top: 92%; opacity: 1; }
-      100% { top: 5%; opacity: 0.8; }
-    }
-    .hud-tag {
-      background: rgba(2, 6, 23, 0.9);
-      border: 1px solid #0284c7;
-      color: #7dd3fc;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      padding: 4px 8px;
-      border-radius: 4px;
-      align-self: flex-start;
-    }
+        .sidebar-footer {
+            padding: 0.85rem 1rem;
+            border-top: 1px solid var(--border-color);
+            background: rgba(0, 0, 0, 0.2);
+            font-size: 12px;
+        }
+        .user-pill { display: flex; align-items: center; gap: 8px; }
+        .user-avatar { width: 32px; height: 32px; border-radius: 50%; background: #0284c7; color: white; display: grid; place-items: center; font-weight: 800; font-size: 11px; }
 
-    .scanner-btn-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-top: 16px;
-    }
-    .btn-scan {
-      padding: 11px;
-      border-radius: 8px;
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      border: none;
-      transition: all .2s;
-    }
-    .btn-webcam { background: linear-gradient(135deg, #0284c7, #06b6d4); color: white; }
-    .btn-verify { background: #10b981; color: #022c22; }
-    .btn-spoof { background: #1e293b; color: #f87171; border: 1px solid #7f1d1d; }
-    .btn-spoof:hover { background: #7f1d1d; color: white; }
+        /* Main Area */
+        .main-wrapper {
+            margin-left: var(--sidebar-width);
+            flex-grow: 1;
+            min-height: calc(100vh - 41px);
+            display: flex;
+            flex-direction: column;
+        }
+        .app-topbar {
+            height: 64px;
+            background-color: rgba(17, 24, 39, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1.5rem;
+            position: sticky;
+            top: 41px;
+            z-index: 99;
+        }
+        .page-badge { font-size: 13px; font-weight: 700; color: #e2e8f0; display: flex; align-items: center; gap: 8px; }
+        .lecture-badge {
+            background: rgba(6, 182, 212, 0.12);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            color: #38bdf8;
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
 
-    /* Student Log Table */
-    .table-box {
-      overflow-x: auto;
-      max-height: 440px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 12px;
-      text-align: left;
-    }
-    th {
-      background: #0b1324;
-      color: var(--text-muted);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      padding: 12px 14px;
-      border-bottom: 1px solid var(--border-color);
-    }
-    td {
-      padding: 12px 14px;
-      border-bottom: 1px solid #1e293b;
-      color: #e2e8f0;
-    }
-    .badge-status-present {
-      background: rgba(16, 185, 129, 0.15);
-      color: #34d399;
-      padding: 3px 8px;
-      border-radius: 4px;
-      font-family: 'JetBrains Mono', monospace;
-      font-weight: 700;
-      font-size: 11px;
-    }
-    .badge-status-spoof {
-      background: rgba(239, 68, 68, 0.2);
-      color: #f87171;
-      padding: 3px 8px;
-      border-radius: 4px;
-      font-family: 'JetBrains Mono', monospace;
-      font-weight: 700;
-      font-size: 11px;
-    }
+        .app-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+        }
 
-    /* Student Quick Test Roster */
-    .roster-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 12px;
-      margin-top: 14px;
-    }
-    .student-item {
-      background: #0b1324;
-      border: 1px solid #1e293b;
-      border-radius: 10px;
-      padding: 12px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      transition: all .2s;
-    }
-    .student-item:hover {
-      border-color: #06b6d4;
-      background: #111e38;
-      transform: translateY(-2px);
-    }
-    .avatar-circle {
-      width: 36px; height: 36px;
-      border-radius: 50%;
-      background: #0284c7;
-      color: white;
-      font-weight: 800;
-      display: grid;
-      place-items: center;
-      font-size: 13px;
-    }
-    .student-info-name { font-size: 12px; font-weight: 700; }
-    .student-info-id { font-size: 10px; color: #94a3b8; font-family: 'JetBrains Mono', monospace; }
+        /* Glass Panel */
+        .glass-panel {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.35rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+        .panel-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.65rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .panel-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
 
-    /* PDF Report Modal */
-    .modal-overlay {
-      position: fixed; inset: 0;
-      background: rgba(0,0,0,0.8);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 100;
-      padding: 20px;
-    }
-    .report-sheet {
-      background: white;
-      color: #0f172a;
-      width: 100%;
-      max-width: 680px;
-      border-radius: 14px;
-      padding: 32px;
-      max-height: 85vh;
-      overflow-y: auto;
-      box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-    }
-    .report-header {
-      border-bottom: 2px solid #0f172a;
-      padding-bottom: 16px;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-    .report-header h3 { font-size: 18px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; }
-    .report-header p { font-size: 12px; color: #475569; margin-top: 4px; }
-    .report-meta {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      font-size: 12px;
-      margin-bottom: 20px;
-      background: #f8fafc;
-      padding: 12px;
-      border-radius: 8px;
-    }
+        /* Stat Cards */
+        .stat-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .stat-card:hover { transform: translateY(-2px); border-color: rgba(59, 130, 246, 0.4); }
+        .stat-card::before { content:''; position: absolute; top:0; left:0; right:0; height:3px; }
+        .stat-card.card-blue::before { background: linear-gradient(90deg, #3b82f6, #06b6d4); }
+        .stat-card.card-green::before { background: linear-gradient(90deg, #10b981, #34d399); }
+        .stat-card.card-amber::before { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+        .stat-card.card-purple::before { background: linear-gradient(90deg, #8b5cf6, #ec4899); }
 
-    @media (max-width: 860px) {
-      .content-grid { grid-template-columns: 1fr; }
-      .scanner-btn-row { grid-template-columns: 1fr; }
-    }
-  </style>
+        .stat-val { font-size: 1.85rem; font-weight: 700; font-family: 'Space Grotesk', sans-serif; line-height: 1.2; }
+        .stat-label { font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.2rem; }
+        .stat-icon {
+            width: 48px; height: 48px; border-radius: 12px;
+            display: grid; place-items: center; font-size: 1.4rem;
+        }
+        .icon-blue { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
+        .icon-green { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+        .icon-amber { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+        .icon-purple { background: rgba(139, 92, 246, 0.15); color: #c084fc; }
+
+        /* Scanner Viewport */
+        .scanner-frame {
+            position: relative;
+            width: 100%;
+            height: 380px;
+            background: #020617;
+            border-radius: 14px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #334155;
+            box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.8);
+        }
+        .scanner-frame video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .face-reticle {
+            position: absolute;
+            width: 210px; height: 250px;
+            border: 2px solid var(--accent-cyan);
+            border-radius: 12px;
+            box-shadow: 0 0 25px rgba(6, 182, 212, 0.4), inset 0 0 15px rgba(6, 182, 212, 0.2);
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 10px;
+            transition: all .3s;
+        }
+        .laser-scan {
+            position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: #38bdf8; box-shadow: 0 0 12px #38bdf8;
+            animation: laserMove 2.4s linear infinite;
+        }
+        @keyframes laserMove { 0% { top: 5%; opacity: 0.8; } 50% { top: 92%; opacity: 1; } 100% { top: 5%; opacity: 0.8; } }
+        .hud-badge {
+            background: rgba(2, 6, 23, 0.9);
+            border: 1px solid #0284c7;
+            color: #7dd3fc;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            align-self: flex-start;
+        }
+
+        /* Custom Table */
+        .custom-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+        .custom-table th {
+            background: #0b1324;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .custom-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #1e293b;
+            color: #e2e8f0;
+            vertical-align: middle;
+        }
+        .custom-table tr:hover td { background-color: rgba(255, 255, 255, 0.02); }
+        .badge-present { background: rgba(16, 185, 129, 0.15); color: #34d399; padding: 4px 8px; border-radius: 4px; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; }
+        .badge-absent { background: rgba(239, 68, 68, 0.15); color: #f87171; padding: 4px 8px; border-radius: 4px; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; }
+        .badge-late { background: rgba(245, 158, 11, 0.15); color: #fbbf24; padding: 4px 8px; border-radius: 4px; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; }
+
+        /* Pages */
+        .page-view { display: none; }
+        .page-view.active-view { display: block; animation: fadeIn .2s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Student Roster Cards */
+        .roster-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 10px 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: all .2s;
+        }
+        .roster-card:hover { border-color: var(--accent-cyan); background: var(--bg-card-hover); transform: translateY(-2px); }
+        .roster-photo {
+            width: 42px; height: 42px; border-radius: 10px; object-fit: cover; border: 1px solid var(--border-color);
+        }
+        .roster-avatar {
+            width: 42px; height: 42px; border-radius: 10px; background: #0284c7; color: white;
+            font-weight: 800; display: grid; place-items: center; font-size: 13px;
+        }
+
+        /* CR80 ID Card */
+        .cr80-badge {
+            background: linear-gradient(135deg, #091322 0%, #030712 100%);
+            border: 2px solid #0284c7;
+            border-radius: 18px;
+            padding: 1.5rem;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            max-width: 420px;
+            margin: 0 auto;
+        }
+        .cr80-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid #0ea5e9;
+            padding-bottom: 10px;
+            margin-bottom: 14px;
+        }
+
+        @media (max-width: 900px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.show-sidebar { transform: translateX(0); }
+            .main-wrapper { margin-left: 0; }
+        }
+
+        /* Print Optimization for Official PDF */
+        @media print {
+            body { background: #fff !important; color: #000 !important; }
+            .portfolio-topbar, .sidebar, .app-topbar, .btn, .nav-tabs, .no-print { display: none !important; }
+            .main-wrapper { margin-left: 0 !important; }
+            .glass-panel { border: none !important; box-shadow: none !important; background: transparent !important; padding: 0 !important; }
+            .print-document { background: #fff !important; color: #000 !important; }
+        }
+    </style>
 </head>
 <body>
 
-  <!-- Top Banner -->
-  <div class="portfolio-nav">
-    <a href="/#projects">← Return to Adis Kidan Portfolio</a>
-    <div class="badge-engine">
-      <span class="indicator-pulse"></span>
-      <span>YuNet &bull; SFace ONNX Deep Neural Biometric Core</span>
-    </div>
-  </div>
-
-  <!-- Header -->
-  <header>
-    <div class="system-title">
-      <div class="system-emblem">◈</div>
-      <div>
-        <h1>DBU Smart Biometric Attendance System</h1>
-        <p>Enterprise Biometric Facial Recognition &bull; Debre Berhan University</p>
-      </div>
-    </div>
-
-    <div class="header-actions">
-      <select class="lecture-select" id="lectureSelect" onchange="switchLecture(this.value)">
-        <option value="cosc421">CoSc 421: Neural Networks &amp; Computer Vision (Hall B-102)</option>
-        <option value="cosc408">CoSc 408: Distributed Systems &amp; Web Eng (Lab 3)</option>
-        <option value="cosc415">CoSc 415: Software Engineering &amp; Architecture (Seminar 1)</option>
-      </select>
-
-      <button class="btn-export-pdf" onclick="openReportModal()">
-        <span>📄</span>
-        <span>Export DBU PDF Report</span>
-      </button>
-    </div>
-  </header>
-
-  <main class="container">
-    <!-- Metrics Row -->
-    <div class="metrics-row">
-      <div class="metric-card">
-        <div>
-          <div class="metric-val" style="color:#38bdf8" id="totalEnrolled">42</div>
-          <div class="metric-label">Enrolled Scholars</div>
-        </div>
-        <div class="metric-pill" style="background:#0369a1;color:#e0f2fe">DBU CS-4</div>
-      </div>
-
-      <div class="metric-card">
-        <div>
-          <div class="metric-val" style="color:#34d399" id="presentCount">38</div>
-          <div class="metric-label">Verified Present</div>
-        </div>
-        <div class="metric-pill" style="background:rgba(16,185,129,0.2);color:#34d399" id="presenceRate">90.5% Presence</div>
-      </div>
-
-      <div class="metric-card">
-        <div>
-          <div class="metric-val" style="color:#f59e0b" id="unmarkedCount">04</div>
-          <div class="metric-label">Absent / Pending</div>
-        </div>
-        <div class="metric-pill" style="background:rgba(245,158,11,0.2);color:#fbbf24">Lecture Period</div>
-      </div>
-
-      <div class="metric-card">
-        <div>
-          <div class="metric-val" style="color:#c084fc">104 FPS</div>
-          <div class="metric-label">YuNet Inference Speed</div>
-        </div>
-        <div class="metric-pill" style="background:#581c87;color:#e9d5ff">GPU ONNX</div>
-      </div>
-    </div>
-
-    <!-- Scanner & Real-Time Log Grid -->
-    <div class="content-grid">
-      <!-- Camera Scanner Panel -->
-      <div class="panel-card">
-        <div class="panel-head">
-          <div class="panel-title">
-            <span style="color:#06b6d4">📷</span>
-            <span>Live Optical Biometric Scanner</span>
-          </div>
-          <span style="font-family:'JetBrains Mono';font-size:11px;color:#38bdf8">128-D Feature Embedding</span>
-        </div>
-
-        <div class="camera-viewport">
-          <video id="cameraVideo" autoplay playsinline muted></video>
-          
-          <div class="face-reticle" id="reticleBox">
-            <div class="laser-line"></div>
-            <div class="hud-tag" id="hudName">SCANNING OPTICAL FIELD...</div>
-            <div class="hud-tag" style="align-self:flex-end" id="hudConfidence">Sim: 0.984 | Liveness: 0.998</div>
-          </div>
-        </div>
-
-        <div class="scanner-btn-row">
-          <button class="btn-scan btn-webcam" onclick="startCamera()">
-            <span>🎥</span>
-            <span>Enable My Webcam</span>
-          </button>
-          <button class="btn-scan btn-verify" onclick="triggerRecognition()">
-            <span>✓</span>
-            <span>Verify Face Match</span>
-          </button>
-          <button class="btn-scan btn-spoof" onclick="triggerSpoofTest()">
-            <span>⚠️</span>
-            <span>Test Anti-Spoofing</span>
-          </button>
-        </div>
-
-        <!-- Student Quick Test Roster -->
-        <div style="margin-top:20px;padding-top:16px;border-top:1px solid #1e293b">
-          <div style="font-size:12px;font-weight:700;color:#94a3b8;margin-bottom:8px">TAP A STUDENT TO RECOGNIZE &amp; VERIFY:</div>
-          <div class="roster-grid">
-            <div class="student-item" onclick="recognizeStudent('Adis Kidan', 'DBU/1219/14', '99.4%')">
-              <div class="avatar-circle">AK</div>
-              <div>
-                <div class="student-info-name">Adis Kidan</div>
-                <div class="student-info-id">DBU/1219/14</div>
-              </div>
+    <!-- Top Portfolio Link Bar -->
+    <div class="portfolio-topbar">
+        <a href="/#projects">
+            <i class="bi bi-arrow-left"></i>
+            <span>Return to Adis Kidan Portfolio</span>
+        </a>
+        <div class="d-flex align-items-center gap-3">
+            <div class="engine-pill d-none d-md-flex">
+                <span class="engine-dot"></span>
+                <span>YuNet (104 FPS) + SFace ONNX 128-D Model Active</span>
             </div>
-            <div class="student-item" onclick="recognizeStudent('Dawit Abebe', 'DBU/1044/14', '98.6%')">
-              <div class="avatar-circle" style="background:#059669">DA</div>
-              <div>
-                <div class="student-info-name">Dawit Abebe</div>
-                <div class="student-info-id">DBU/1044/14</div>
-              </div>
+            <!-- Role Switcher -->
+            <div class="role-pill" onclick="cycleRole()" id="rolePill" title="Click to test role permissions (Admin / Teacher / Student)">
+                <i class="bi bi-person-fill-gear"></i>
+                <span id="roleLabel">Role: Administrator</span>
             </div>
-            <div class="student-item" onclick="recognizeStudent('Behailu Yifru', 'DBU/0982/14', '98.9%')">
-              <div class="avatar-circle" style="background:#d97706">BY</div>
-              <div>
-                <div class="student-info-name">Behailu Yifru</div>
-                <div class="student-info-id">DBU/0982/14</div>
-              </div>
-            </div>
-            <div class="student-item" onclick="recognizeStudent('Abush Bayelign', 'DBU/1421/14', '98.2%')">
-              <div class="avatar-circle" style="background:#7c3aed">AB</div>
-              <div>
-                <div class="student-info-name">Abush Bayelign</div>
-                <div class="student-info-id">DBU/1421/14</div>
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
-
-      <!-- Live Attendance Register -->
-      <div class="panel-card">
-        <div class="panel-head">
-          <div class="panel-title">
-            <span style="color:#10b981">📋</span>
-            <span>Real-time Attendance Register</span>
-          </div>
-          <span style="font-size:11px;font-family:'JetBrains Mono';color:#10b981">Auto-Logging Live</span>
-        </div>
-
-        <div class="table-box">
-          <table>
-            <thead>
-              <tr>
-                <th>STUDENT</th>
-                <th>STUDENT ID</th>
-                <th>TIME</th>
-                <th>SIMILARITY</th>
-                <th>STATUS</th>
-              </tr>
-            </thead>
-            <tbody id="logTbody">
-              <tr>
-                <td><strong>Adis Kidan</strong></td>
-                <td>DBU/1219/14</td>
-                <td>10:42:15 AM</td>
-                <td>99.4%</td>
-                <td><span class="badge-status-present">✓ PRESENT</span></td>
-              </tr>
-              <tr>
-                <td><strong>Dawit Abebe</strong></td>
-                <td>DBU/1044/14</td>
-                <td>10:38:02 AM</td>
-                <td>98.6%</td>
-                <td><span class="badge-status-present">✓ PRESENT</span></td>
-              </tr>
-              <tr>
-                <td><strong>Behailu Yifru</strong></td>
-                <td>DBU/0982/14</td>
-                <td>10:34:19 AM</td>
-                <td>98.9%</td>
-                <td><span class="badge-status-present">✓ PRESENT</span></td>
-              </tr>
-              <tr>
-                <td><strong>Abush Bayelign</strong></td>
-                <td>DBU/1421/14</td>
-                <td>10:31:50 AM</td>
-                <td>98.2%</td>
-                <td><span class="badge-status-present">✓ PRESENT</span></td>
-              </tr>
-              <tr>
-                <td><strong>Selamawit Tadesse</strong></td>
-                <td>DBU/1105/14</td>
-                <td>10:28:44 AM</td>
-                <td>97.5%</td>
-                <td><span class="badge-status-present">✓ PRESENT</span></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
     </div>
-  </main>
 
-  <!-- PDF Report Sheet Modal -->
-  <div class="modal-overlay" id="reportModal" onclick="closeReportModal()">
-    <div class="report-sheet" onclick="event.stopPropagation()">
-      <div class="report-header">
-        <h3>Debre Berhan University (DBU)</h3>
-        <p>Department of Computer Science &bull; Academic Year 2026 / 2018 E.C.</p>
-        <p style="font-weight:700;color:#0f172a;margin-top:8px">OFFICIAL BIOMETRIC ATTENDANCE REGISTER</p>
-      </div>
+    <div class="app-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="appSidebar">
+            <div class="sidebar-header">
+                <div class="logo-box">
+                    <i class="bi bi-person-bounding-box"></i>
+                </div>
+                <div class="brand-text">
+                    <span class="brand-title">DBU FaceAI</span>
+                    <span class="brand-sub">Debre Berhan University</span>
+                </div>
+            </div>
 
-      <div class="report-meta">
-        <div><strong>Course:</strong> <span id="reportCourse">CoSc 421: Computer Vision & AI</span></div>
-        <div><strong>Date:</strong> <span id="reportDate">October 29, 2026</span></div>
-        <div><strong>Instructor:</strong> Prof. Dawit / Adis Kidan (Lab Lead)</div>
-        <div><strong>Class Size:</strong> 42 Enrolled (38 Present, 4 Absent)</div>
-      </div>
+            <nav class="sidebar-menu">
+                <div class="menu-label">Main Navigation</div>
+                
+                <div class="menu-item active" onclick="switchNav('dashboard', this)">
+                    <i class="bi bi-grid-1x2-fill text-primary"></i>
+                    <span>Dashboard</span>
+                </div>
 
-      <div style="margin-bottom:20px">
-        <table style="color:#0f172a">
-          <thead>
-            <tr style="background:#f1f5f9;color:#475569">
-              <th style="color:#475569">#</th>
-              <th style="color:#475569">Full Name</th>
-              <th style="color:#475569">Student ID</th>
-              <th style="color:#475569">Verification Time</th>
-              <th style="color:#475569">Biometric Match</th>
-              <th style="color:#475569">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td>1</td><td>Adis Kidan</td><td>DBU/1219/14</td><td>10:42 AM</td><td>99.4%</td><td><strong style="color:#059669">PRESENT</strong></td></tr>
-            <tr><td>2</td><td>Dawit Abebe</td><td>DBU/1044/14</td><td>10:38 AM</td><td>98.6%</td><td><strong style="color:#059669">PRESENT</strong></td></tr>
-            <tr><td>3</td><td>Behailu Yifru</td><td>DBU/0982/14</td><td>10:34 AM</td><td>98.9%</td><td><strong style="color:#059669">PRESENT</strong></td></tr>
-            <tr><td>4</td><td>Abush Bayelign</td><td>DBU/1421/14</td><td>10:31 AM</td><td>98.2%</td><td><strong style="color:#059669">PRESENT</strong></td></tr>
-            <tr><td>5</td><td>Selamawit Tadesse</td><td>DBU/1105/14</td><td>10:28 AM</td><td>97.5%</td><td><strong style="color:#059669">PRESENT</strong></td></tr>
-          </tbody>
-        </table>
-      </div>
+                <div class="menu-item scanner-highlight" onclick="switchNav('scanner', this)">
+                    <i class="bi bi-camera-video-fill"></i>
+                    <span>Live Biometric Scanner</span>
+                    <span class="pulse-dot"></span>
+                </div>
 
-      <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-top:30px;padding-top:20px;border-top:1px dashed #cbd5e1">
-        <div style="font-size:11px;color:#64748b">Generated by DBU YuNet+SFace Biometric System &bull; ReportLab Engine</div>
-        <div style="text-align:center">
-          <div style="width:140px;border-bottom:1px solid #0f172a;margin-bottom:4px"></div>
-          <div style="font-size:11px;font-weight:700">Department Head Signature</div>
+                <div class="menu-item" onclick="switchNav('students', this)">
+                    <i class="bi bi-people-fill text-info"></i>
+                    <span>Students Directory</span>
+                </div>
+
+                <div class="menu-item" onclick="switchNav('portal', this)">
+                    <i class="bi bi-person-badge-fill text-cyan"></i>
+                    <span>Student Portal</span>
+                    <span class="badge bg-cyan text-dark ms-auto" style="font-size: 9px; font-weight:800; background:#06b6d4">SELF</span>
+                </div>
+
+                <div class="menu-item" onclick="switchNav('timetable', this)">
+                    <i class="bi bi-calendar3-week-fill text-warning"></i>
+                    <span>Class Timetable</span>
+                </div>
+
+                <div class="menu-item" onclick="switchNav('attendance', this)">
+                    <i class="bi bi-calendar-check-fill text-success"></i>
+                    <span>Attendance Records</span>
+                </div>
+
+                <div class="menu-item" onclick="switchNav('reports', this)">
+                    <i class="bi bi-file-earmark-pdf-fill text-danger"></i>
+                    <span>Official Reports (PDF)</span>
+                </div>
+
+                <div class="menu-label mt-2">Security &amp; System</div>
+
+                <div class="menu-item" onclick="switchNav('audit', this)">
+                    <i class="bi bi-shield-check text-success"></i>
+                    <span>Security &amp; Anti-Spoof</span>
+                </div>
+
+                <div class="menu-item" onclick="switchNav('settings', this)">
+                    <i class="bi bi-sliders text-secondary"></i>
+                    <span>Model Parameters</span>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-pill">
+                    <img src="faces/ADIS_1792671218.jpg" onerror="this.src='/adis-image.png'" class="user-avatar" style="object-fit:cover" alt="User">
+                    <div>
+                        <div style="font-weight:700;color:white;font-size:12px" id="sidebarUser">Adis Kidan</div>
+                        <div style="font-size:10px;color:var(--text-muted)" id="sidebarRole">Lead Developer / Admin</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <div class="main-wrapper">
+            <!-- App Topbar -->
+            <header class="app-topbar">
+                <div class="d-flex align-items-center gap-3">
+                    <button class="btn btn-dark d-md-none" onclick="toggleSidebar()">
+                        <i class="bi bi-list"></i>
+                    </button>
+                    <div class="page-badge" id="topPageTitle">
+                        <i class="bi bi-grid-1x2-fill text-primary"></i>
+                        <span>Campus Overview Dashboard</span>
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-center gap-3">
+                    <div class="lecture-badge">
+                        <span class="engine-dot"></span>
+                        <span>CoSc 421: AI &amp; Vision &bull; Hall B-102</span>
+                    </div>
+                    <div class="d-none d-sm-block text-muted font-monospace small" id="liveClock">10:45:00 AM</div>
+                </div>
+            </header>
+
+            <div class="app-content">
+
+                <!-- 1. DASHBOARD VIEW -->
+                <div class="page-view active-view" id="view-dashboard">
+                    <!-- Metric Cards -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-sm-6 col-xl-3">
+                            <div class="stat-card card-blue">
+                                <div>
+                                    <div class="stat-val text-info" id="dashTotal">42</div>
+                                    <div class="stat-label">Enrolled Scholars</div>
+                                </div>
+                                <div class="stat-icon icon-blue"><i class="bi bi-people"></i></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-xl-3">
+                            <div class="stat-card card-green">
+                                <div>
+                                    <div class="stat-val text-success" id="dashPresent">38</div>
+                                    <div class="stat-label">Verified Present Today</div>
+                                </div>
+                                <div class="stat-icon icon-green"><i class="bi bi-person-check"></i></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-xl-3">
+                            <div class="stat-card card-amber">
+                                <div>
+                                    <div class="stat-val text-warning" id="dashAbsent">04</div>
+                                    <div class="stat-label">Absent / Pending</div>
+                                </div>
+                                <div class="stat-icon icon-amber"><i class="bi bi-person-x"></i></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-xl-3">
+                            <div class="stat-card card-purple">
+                                <div>
+                                    <div class="stat-val" style="color:#c084fc">90.5%</div>
+                                    <div class="stat-label">Today's Presence Rate</div>
+                                </div>
+                                <div class="stat-icon icon-purple"><i class="bi bi-pie-chart"></i></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- In-Session Banner & Action Launchers -->
+                    <div class="row g-4 mb-4">
+                        <div class="col-lg-8">
+                            <div class="glass-panel h-100 mb-0">
+                                <div class="panel-head">
+                                    <div class="panel-title">
+                                        <i class="bi bi-camera-video text-success"></i>
+                                        <span>Optical Biometric Scanner Live Station</span>
+                                    </div>
+                                    <button class="btn btn-sm btn-primary" onclick="switchNavByName('scanner')">Launch Scanner ↗</button>
+                                </div>
+                                <p class="text-secondary small mb-3">
+                                    Real-time enterprise facial inference pipeline using OpenCV <strong>YuNet</strong> for 100+ FPS face tracking and <strong>SFace</strong> for 128-dimensional deep feature cosine matching with passive anti-spoofing reflection defense.
+                                </p>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <span class="badge bg-dark border border-secondary p-2"><i class="bi bi-cpu me-1 text-cyan"></i> SFace ONNX 128-D Embeddings</span>
+                                    <span class="badge bg-dark border border-secondary p-2"><i class="bi bi-shield-check me-1 text-success"></i> Passive Liveness (Laplacian + YCrCb)</span>
+                                    <span class="badge bg-dark border border-secondary p-2"><i class="bi bi-qr-code me-1 text-warning"></i> CR80 Student ID Badges</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="glass-panel h-100 mb-0">
+                                <div class="panel-head">
+                                    <div class="panel-title">
+                                        <i class="bi bi-clock-history text-info"></i>
+                                        <span>Current Lecture</span>
+                                    </div>
+                                    <span class="badge bg-success-subtle text-success">In Session</span>
+                                </div>
+                                <h6 class="text-white mb-1">CoSc 421: AI &amp; Vision</h6>
+                                <div class="text-muted small mb-2"><i class="bi bi-geo-alt text-cyan me-1"></i>Hall B-102 &bull; 08:30 - 10:30 AM</div>
+                                <div class="text-secondary small">Instructor: Prof. Dawit / Adis Kidan (Lab Lead)</div>
+                                <div class="mt-3 pt-2 border-top border-secondary">
+                                    <button class="btn btn-sm btn-outline-light w-100" onclick="switchNavByName('portal')">
+                                        <i class="bi bi-person-badge me-1"></i> Open Student Self-Service Portal
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. LIVE SCANNER VIEW -->
+                <div class="page-view" id="view-scanner">
+                    <div class="row g-4">
+                        <div class="col-lg-7">
+                            <div class="glass-panel mb-0">
+                                <div class="panel-head">
+                                    <div class="panel-title">
+                                        <i class="bi bi-camera-video text-success"></i>
+                                        <span>Biometric Optical Scanner</span>
+                                    </div>
+                                    <div class="d-flex gap-2">
+                                        <select class="form-select form-select-sm bg-dark border-secondary text-white" id="scanCourseSelect" style="max-width: 190px;">
+                                            <option>CoSc 421: AI &amp; Vision</option>
+                                            <option>CoSc 408: Distributed Sys</option>
+                                            <option>CoSc 415: Software Arch</option>
+                                            <option>GENERAL: Daily Entry</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="scanner-frame">
+                                    <video id="liveVideo" autoplay playsinline muted></video>
+                                    <img id="uploadedPreview" style="display:none; width:100%; height:100%; object-fit:cover;" alt="Uploaded Test">
+                                    <div class="face-reticle" id="reticle">
+                                        <div class="laser-scan"></div>
+                                        <div class="hud-badge" id="hudStatus">SCANNING OPTICAL FIELD...</div>
+                                        <div class="hud-badge" style="align-self:flex-end" id="hudScore">Sim: 0.984 | Liveness: 0.998</div>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex flex-wrap gap-2 mt-3">
+                                    <button class="btn btn-primary flex-grow-1" onclick="startWebcam()">
+                                        <i class="bi bi-camera-fill me-1"></i> Enable Camera
+                                    </button>
+                                    <label class="btn btn-outline-info flex-grow-1 mb-0" style="cursor:pointer">
+                                        <i class="bi bi-upload me-1"></i> Upload Face Photo
+                                        <input type="file" accept="image/*" style="display:none" onchange="handlePhotoUpload(event)">
+                                    </label>
+                                    <button class="btn btn-success flex-grow-1" onclick="simulateMatch()">
+                                        <i class="bi bi-person-check-fill me-1"></i> Verify Match
+                                    </button>
+                                    <button class="btn btn-outline-danger flex-grow-1" onclick="simulateSpoof()">
+                                        <i class="bi bi-shield-x me-1"></i> Test Anti-Spoof
+                                    </button>
+                                </div>
+
+                                <!-- Quick Roster Tap with Real Photos -->
+                                <div class="mt-4 pt-3 border-top border-secondary">
+                                    <div class="small fw-bold text-muted mb-2">TAP ANY ENROLLED STUDENT TO SCAN &amp; VERIFY:</div>
+                                    <div class="row g-2">
+                                        <div class="col-sm-6">
+                                            <div class="roster-card" onclick="verifyStudent('Adis Kidan', 'DBU/1219/14', '99.4%', 'faces/ADIS_1792671218.jpg')">
+                                                <img src="faces/ADIS_1792671218.jpg" onerror="this.src='/adis-image.png'" class="roster-photo" alt="Adis">
+                                                <div>
+                                                    <div class="small fw-bold text-white">Adis Kidan</div>
+                                                    <div class="text-muted font-monospace" style="font-size:10px">DBU/1219/14 &bull; CS</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="roster-card" onclick="verifyStudent('Abush Bayelign', 'DBU/1602/16', '98.7%', 'faces/1602016_1792687957.jpg')">
+                                                <img src="faces/1602016_1792687957.jpg" onerror="this.style.display='none'" class="roster-photo" alt="Abush">
+                                                <div>
+                                                    <div class="small fw-bold text-white">Abush Bayelign</div>
+                                                    <div class="text-muted font-monospace" style="font-size:10px">DBU/1602/16 &bull; IT</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="roster-card" onclick="verifyStudent('Bethlehem Tadesse', 'DBU/0001/16', '98.9%', 'faces/DBU_0001_16_1792669306.jpg')">
+                                                <img src="faces/DBU_0001_16_1792669306.jpg" onerror="this.style.display='none'" class="roster-photo" alt="Bethlehem">
+                                                <div>
+                                                    <div class="small fw-bold text-white">Bethlehem Tadesse</div>
+                                                    <div class="text-muted font-monospace" style="font-size:10px">DBU/0001/16 &bull; SE</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="roster-card" onclick="verifyStudent('Dawit Abebe', 'DBU/1044/14', '98.6%', '')">
+                                                <div class="roster-avatar" style="background:#059669">DA</div>
+                                                <div>
+                                                    <div class="small fw-bold text-white">Dawit Abebe</div>
+                                                    <div class="text-muted font-monospace" style="font-size:10px">DBU/1044/14 &bull; CS</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Live Scanned Log -->
+                        <div class="col-lg-5">
+                            <div class="glass-panel mb-0 h-100">
+                                <div class="panel-head">
+                                    <div class="panel-title">
+                                        <i class="bi bi-clock-history text-cyan"></i>
+                                        <span>Today's Real-time Scan Log</span>
+                                    </div>
+                                    <span class="badge bg-success-subtle text-success">Live Sync</span>
+                                </div>
+
+                                <div class="table-responsive" style="max-height: 480px;">
+                                    <table class="custom-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Student</th>
+                                                <th>ID</th>
+                                                <th>Time</th>
+                                                <th>Match</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="scanLogTbody">
+                                            <tr><td><strong>Adis Kidan</strong></td><td>DBU/1219/14</td><td>10:42 AM</td><td>99.4%</td><td><span class="badge-present">✓ PRESENT</span></td></tr>
+                                            <tr><td><strong>Dawit Abebe</strong></td><td>DBU/1044/14</td><td>10:38 AM</td><td>98.6%</td><td><span class="badge-present">✓ PRESENT</span></td></tr>
+                                            <tr><td><strong>Bethlehem Tadesse</strong></td><td>DBU/0001/16</td><td>10:34 AM</td><td>98.9%</td><td><span class="badge-present">✓ PRESENT</span></td></tr>
+                                            <tr><td><strong>Abush Bayelign</strong></td><td>DBU/1602/16</td><td>10:31 AM</td><td>98.2%</td><td><span class="badge-present">✓ PRESENT</span></td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. STUDENTS DIRECTORY VIEW -->
+                <div class="page-view" id="view-students">
+                    <div class="glass-panel">
+                        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+                            <div class="d-flex gap-2">
+                                <input type="text" class="form-control bg-dark border-secondary text-white" placeholder="Search by name or ID..." id="studentSearch" onkeyup="filterStudentTable()" style="max-width:260px">
+                                <select class="form-select bg-dark border-secondary text-white" style="max-width:200px" id="deptFilter" onchange="filterStudentTable()">
+                                    <option value="all">All Departments</option>
+                                    <option value="Computer Science">Computer Science</option>
+                                    <option value="Software Engineering">Software Engineering</option>
+                                    <option value="Information Tech">Information Tech</option>
+                                </select>
+                            </div>
+
+                            <button class="btn btn-primary" onclick="openRegisterModal()">
+                                <i class="bi bi-person-plus-fill me-1"></i> Register New Student
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel">
+                        <div class="panel-head">
+                            <div class="panel-title">
+                                <i class="bi bi-people text-info"></i>
+                                <span>Enrolled Students Biometric Directory</span>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="custom-table" id="studentTable">
+                                <thead>
+                                    <tr>
+                                        <th>Photo</th>
+                                        <th>Student ID</th>
+                                        <th>Full Name</th>
+                                        <th>Department</th>
+                                        <th>Year / Section</th>
+                                        <th>Attendance</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><img src="faces/ADIS_1792671218.jpg" onerror="this.src='/adis-image.png'" class="roster-photo" alt="Adis"></td>
+                                        <td><code class="text-info fw-bold">DBU/1219/14</code></td>
+                                        <td><strong>Adis Kidan</strong></td>
+                                        <td>Computer Science</td>
+                                        <td>Year 4 - Sec A</td>
+                                        <td><span class="badge bg-success-subtle text-success">98.5% (40/42)</span></td>
+                                        <td><button class="btn btn-sm btn-outline-info" onclick="viewBadge('Adis Kidan', 'DBU/1219/14', 'Computer Science', 'faces/ADIS_1792671218.jpg')">View ID Card</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td><img src="faces/1602016_1792687957.jpg" onerror="this.style.display='none'" class="roster-photo" alt="Abush"></td>
+                                        <td><code class="text-info fw-bold">DBU/1602/16</code></td>
+                                        <td><strong>Abush Bayelign</strong></td>
+                                        <td>Information Tech</td>
+                                        <td>Year 3 - Sec B</td>
+                                        <td><span class="badge bg-success-subtle text-success">92.8% (38/42)</span></td>
+                                        <td><button class="btn btn-sm btn-outline-info" onclick="viewBadge('Abush Bayelign', 'DBU/1602/16', 'Information Tech', 'faces/1602016_1792687957.jpg')">View ID Card</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td><img src="faces/DBU_0001_16_1792669306.jpg" onerror="this.style.display='none'" class="roster-photo" alt="Bethlehem"></td>
+                                        <td><code class="text-info fw-bold">DBU/0001/16</code></td>
+                                        <td><strong>Bethlehem Tadesse</strong></td>
+                                        <td>Software Engineering</td>
+                                        <td>Year 4 - Sec A</td>
+                                        <td><span class="badge bg-success-subtle text-success">95.2% (39/42)</span></td>
+                                        <td><button class="btn btn-sm btn-outline-info" onclick="viewBadge('Bethlehem Tadesse', 'DBU/0001/16', 'Software Engineering', 'faces/DBU_0001_16_1792669306.jpg')">View ID Card</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td><div class="roster-avatar" style="background:#059669">DA</div></td>
+                                        <td><code class="text-info fw-bold">DBU/1044/14</code></td>
+                                        <td><strong>Dawit Abebe</strong></td>
+                                        <td>Computer Science</td>
+                                        <td>Year 4 - Sec A</td>
+                                        <td><span class="badge bg-success-subtle text-success">95.2% (39/42)</span></td>
+                                        <td><button class="btn btn-sm btn-outline-info" onclick="viewBadge('Dawit Abebe', 'DBU/1044/14', 'Computer Science', '')">View ID Card</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td><div class="roster-avatar" style="background:#7c3aed">KS</div></td>
+                                        <td><code class="text-info fw-bold">DBU/1410/14</code></td>
+                                        <td><strong>Kidus Solomon</strong></td>
+                                        <td>Computer Science</td>
+                                        <td>Year 4 - Sec B</td>
+                                        <td><span class="badge bg-success-subtle text-success">96.0% (40/42)</span></td>
+                                        <td><button class="btn btn-sm btn-outline-info" onclick="viewBadge('Kidus Solomon', 'DBU/1410/14', 'Computer Science', '')">View ID Card</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. STUDENT SELF-SERVICE PORTAL (portal.html) -->
+                <div class="page-view" id="view-portal">
+                    <div class="row g-4 mb-4">
+                        <!-- Profile Card -->
+                        <div class="col-lg-4">
+                            <div class="glass-panel text-center p-4 h-100 d-flex flex-column justify-content-between">
+                                <div>
+                                    <div class="position-relative d-inline-block mb-3">
+                                        <img src="faces/ADIS_1792671218.jpg" onerror="this.src='/adis-image.png'" class="rounded-4 border border-2 border-primary shadow-lg" style="width: 120px; height: 120px; object-fit: cover;" alt="Adis Kidan">
+                                        <span class="position-absolute bottom-0 end-0 bg-success border border-white rounded-circle p-2" title="Biometric Profile Verified">
+                                            <i class="bi bi-shield-check text-white"></i>
+                                        </span>
+                                    </div>
+
+                                    <h4 class="text-white fw-bold mb-1">Adis Kidan</h4>
+                                    <div class="badge bg-dark border border-secondary px-3 py-2 mb-3">
+                                        <code class="text-info fs-6">DBU/1219/14</code>
+                                    </div>
+
+                                    <div class="text-start bg-dark bg-opacity-50 p-3 rounded-3 border border-secondary border-opacity-25 mb-3 small">
+                                        <div class="d-flex justify-content-between py-1 border-bottom border-secondary border-opacity-25">
+                                            <span class="text-muted">Department:</span>
+                                            <strong class="text-white">Computer Science</strong>
+                                        </div>
+                                        <div class="d-flex justify-content-between py-1 border-bottom border-secondary border-opacity-25">
+                                            <span class="text-muted">Class &amp; Section:</span>
+                                            <strong class="text-white">Year 4 - Section A</strong>
+                                        </div>
+                                        <div class="d-flex justify-content-between py-1 border-bottom border-secondary border-opacity-25">
+                                            <span class="text-muted">Email:</span>
+                                            <span class="text-info">adiskidan368@gmail.com</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between py-1">
+                                            <span class="text-muted">Biometric Status:</span>
+                                            <span class="text-success fw-bold"><i class="bi bi-check-circle-fill me-1"></i>Enrolled (SFace 128-D)</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button class="btn btn-outline-info w-100 py-2 d-flex align-items-center justify-content-center gap-2" onclick="viewBadge('Adis Kidan', 'DBU/1219/14', 'Computer Science', 'faces/ADIS_1792671218.jpg')">
+                                    <i class="bi bi-person-badge"></i>
+                                    <span>Download Official ID Card (PDF)</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Performance & Exam Compliance Gauge -->
+                        <div class="col-lg-8">
+                            <div class="row g-3 mb-3">
+                                <div class="col-sm-4">
+                                    <div class="stat-card card-green p-3">
+                                        <div>
+                                            <div class="stat-val text-success">40</div>
+                                            <div class="stat-label">On-Time Presences</div>
+                                        </div>
+                                        <div class="stat-icon icon-green"><i class="bi bi-check-circle"></i></div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="stat-card card-amber p-3">
+                                        <div>
+                                            <div class="stat-val text-warning">02</div>
+                                            <div class="stat-label">Late Arrivals</div>
+                                        </div>
+                                        <div class="stat-icon icon-amber"><i class="bi bi-clock-history"></i></div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="stat-card card-purple p-3">
+                                        <div>
+                                            <div class="stat-val text-info">98.5%</div>
+                                            <div class="stat-label">Overall Rate</div>
+                                        </div>
+                                        <div class="stat-icon icon-purple"><i class="bi bi-pie-chart"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Compliance Box -->
+                            <div class="glass-panel mb-3">
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <span class="fw-semibold text-white">University Exam Eligibility Compliance</span>
+                                    <span class="badge bg-success-subtle text-success border border-success px-3 py-1">
+                                        <i class="bi bi-check2-all me-1"></i>Eligible for Final Exams (>75%)
+                                    </span>
+                                </div>
+                                <div class="progress" style="height: 10px; background: #0f172a;">
+                                    <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: 98.5%;"></div>
+                                </div>
+                                <div class="d-flex justify-content-between small text-muted mt-2">
+                                    <span>Minimum Required: 75%</span>
+                                    <span class="text-success fw-bold">Current Standing: 98.5%</span>
+                                </div>
+                            </div>
+
+                            <!-- Course Attendance Table -->
+                            <div class="glass-panel">
+                                <div class="panel-head">
+                                    <div class="panel-title">
+                                        <i class="bi bi-journals text-primary"></i>
+                                        <span>Current Semester Course Attendance</span>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="custom-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Course Code</th>
+                                                <th>Course Title</th>
+                                                <th>Sessions</th>
+                                                <th>Attended</th>
+                                                <th>Rate</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><code class="text-info fw-bold">CoSc 421</code></td>
+                                                <td>Neural Networks &amp; Computer Vision</td>
+                                                <td>14</td>
+                                                <td>14</td>
+                                                <td>100%</td>
+                                                <td><span class="badge-present">GOOD</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><code class="text-info fw-bold">CoSc 408</code></td>
+                                                <td>Distributed Systems &amp; Web Eng</td>
+                                                <td>14</td>
+                                                <td>13</td>
+                                                <td>92.8%</td>
+                                                <td><span class="badge-present">GOOD</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><code class="text-info fw-bold">CoSc 415</code></td>
+                                                <td>Software Architecture &amp; SDLC</td>
+                                                <td>14</td>
+                                                <td>13</td>
+                                                <td>92.8%</td>
+                                                <td><span class="badge-present">GOOD</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. TIMETABLE VIEW -->
+                <div class="page-view" id="view-timetable">
+                    <div class="glass-panel">
+                        <div class="panel-head">
+                            <div class="panel-title">
+                                <i class="bi bi-calendar3-week text-warning"></i>
+                                <span>Weekly Lecture Timetable &amp; Schedule</span>
+                            </div>
+                            <button class="btn btn-sm btn-primary" onclick="openScheduleModal()">+ Add Class Schedule</button>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="custom-table" id="timetableTable">
+                                <thead>
+                                    <tr>
+                                        <th>Day</th>
+                                        <th>Course Code</th>
+                                        <th>Course Name</th>
+                                        <th>Time Slot</th>
+                                        <th>Hall / Lab</th>
+                                        <th>Instructor</th>
+                                        <th>Session Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="background:rgba(6, 182, 212, 0.08)">
+                                        <td><span class="badge bg-primary">Monday</span></td>
+                                        <td><code class="text-info fw-bold">CoSc 421</code></td>
+                                        <td><strong>Neural Networks &amp; Computer Vision</strong></td>
+                                        <td>08:30 - 10:30 AM</td>
+                                        <td>Hall B-102</td>
+                                        <td>Prof. Dawit / Adis Kidan</td>
+                                        <td><span class="badge-present">● ACTIVE NOW</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge bg-secondary">Tuesday</span></td>
+                                        <td><code class="text-info fw-bold">CoSc 408</code></td>
+                                        <td><strong>Distributed Systems &amp; Web Eng</strong></td>
+                                        <td>10:45 - 12:45 PM</td>
+                                        <td>Computer Lab 3</td>
+                                        <td>Adis Kidan</td>
+                                        <td><span class="badge bg-secondary">Upcoming</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge bg-secondary">Wednesday</span></td>
+                                        <td><code class="text-info fw-bold">CoSc 415</code></td>
+                                        <td><strong>Software Architecture &amp; SDLC</strong></td>
+                                        <td>02:00 - 04:00 PM</td>
+                                        <td>Seminar Room 1</td>
+                                        <td>Dr. Solomon T.</td>
+                                        <td><span class="badge bg-secondary">Scheduled</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge bg-secondary">Thursday</span></td>
+                                        <td><code class="text-info fw-bold">CoSc 430</code></td>
+                                        <td><strong>Machine Learning &amp; Data Mining</strong></td>
+                                        <td>09:00 - 11:00 AM</td>
+                                        <td>Lab 4</td>
+                                        <td>Dr. Solomon T.</td>
+                                        <td><span class="badge bg-secondary">Scheduled</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. ATTENDANCE RECORDS VIEW -->
+                <div class="page-view" id="view-attendance">
+                    <div class="glass-panel">
+                        <div class="panel-head">
+                            <div class="panel-title">
+                                <i class="bi bi-calendar-check text-success"></i>
+                                <span>Master Attendance Log Archive</span>
+                            </div>
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-sm btn-outline-success" onclick="exportCSV()"><i class="bi bi-filetype-csv me-1"></i> Export CSV</button>
+                                <button class="btn btn-sm btn-outline-info" onclick="switchNavByName('reports')"><i class="bi bi-file-earmark-pdf me-1"></i> View ReportLab PDF</button>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="custom-table" id="masterAttendanceTable">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Student ID</th>
+                                        <th>Student Name</th>
+                                        <th>Course</th>
+                                        <th>Timestamp</th>
+                                        <th>Similarity</th>
+                                        <th>Method</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>Oct 29, 2026</td><td>DBU/1219/14</td><td><strong>Adis Kidan</strong></td><td>CoSc 421</td><td>10:42:15 AM</td><td>99.4%</td><td>YuNet+SFace</td><td><span class="badge-present">✓ PRESENT</span></td></tr>
+                                    <tr><td>Oct 29, 2026</td><td>DBU/1044/14</td><td><strong>Dawit Abebe</strong></td><td>CoSc 421</td><td>10:38:02 AM</td><td>98.6%</td><td>YuNet+SFace</td><td><span class="badge-present">✓ PRESENT</span></td></tr>
+                                    <tr><td>Oct 29, 2026</td><td>DBU/0001/16</td><td><strong>Bethlehem Tadesse</strong></td><td>CoSc 421</td><td>10:34:19 AM</td><td>98.9%</td><td>YuNet+SFace</td><td><span class="badge-present">✓ PRESENT</span></td></tr>
+                                    <tr><td>Oct 29, 2026</td><td>DBU/1602/16</td><td><strong>Abush Bayelign</strong></td><td>CoSc 421</td><td>10:31:50 AM</td><td>98.2%</td><td>YuNet+SFace</td><td><span class="badge-present">✓ PRESENT</span></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7. REPORTS VIEW (ReportLab PDF) -->
+                <div class="page-view" id="view-reports">
+                    <div class="glass-panel">
+                        <div class="panel-head no-print">
+                            <div class="panel-title">
+                                <i class="bi bi-file-earmark-pdf text-danger"></i>
+                                <span>Official University Attendance Register (ReportLab Engine Preview)</span>
+                            </div>
+                            <button class="btn btn-primary" onclick="window.print()">
+                                <i class="bi bi-printer-fill me-1"></i> Print / Save Official PDF
+                            </button>
+                        </div>
+
+                        <!-- Formatted Report Document -->
+                        <div class="p-4 rounded-3 bg-white text-dark print-document">
+                            <div class="text-center border-bottom border-dark pb-3 mb-3">
+                                <h4 class="fw-bold mb-1" style="color: #0f2b48;">DEBRE BERHAN UNIVERSITY</h4>
+                                <h6 class="text-muted mb-1" style="color: #205493;">COLLEGE OF COMPUTING &amp; INFORMATICS &bull; DEPARTMENT OF COMPUTER SCIENCE</h6>
+                                <p class="small text-uppercase fw-semibold mb-0" style="color: #555;">Official Biometric Attendance Register &bull; Semester I, 2026/2027 (2018 E.C.)</p>
+                            </div>
+
+                            <div class="row g-2 small mb-3 bg-light p-2 rounded">
+                                <div class="col-6"><strong>Course Code:</strong> CoSc 421 (Computer Vision &amp; AI)</div>
+                                <div class="col-6"><strong>Date Generated:</strong> October 29, 2026</div>
+                                <div class="col-6"><strong>Instructor:</strong> Prof. Dawit / Adis Kidan (Lab Lead)</div>
+                                <div class="col-6"><strong>Total In Attendance:</strong> 38 Present / 42 Enrolled (90.5%)</div>
+                            </div>
+
+                            <table class="table table-bordered table-sm small">
+                                <thead class="table-secondary">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Student ID</th>
+                                        <th>Full Name</th>
+                                        <th>Department</th>
+                                        <th>Time Verified</th>
+                                        <th>Neural Match</th>
+                                        <th>Exam Eligibility</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>1</td><td>DBU/1219/14</td><td>Adis Kidan</td><td>Computer Science</td><td>10:42 AM</td><td>99.4%</td><td><strong class="text-success">✓ Eligible (98.5%)</strong></td></tr>
+                                    <tr><td>2</td><td>DBU/1044/14</td><td>Dawit Abebe</td><td>Computer Science</td><td>10:38 AM</td><td>98.6%</td><td><strong class="text-success">✓ Eligible (95.2%)</strong></td></tr>
+                                    <tr><td>3</td><td>DBU/0001/16</td><td>Bethlehem Tadesse</td><td>Software Engineering</td><td>10:34 AM</td><td>98.9%</td><td><strong class="text-success">✓ Eligible (95.2%)</strong></td></tr>
+                                    <tr><td>4</td><td>DBU/1602/16</td><td>Abush Bayelign</td><td>Information Tech</td><td>10:31 AM</td><td>98.2%</td><td><strong class="text-success">✓ Eligible (92.8%)</strong></td></tr>
+                                </tbody>
+                            </table>
+
+                            <div class="d-flex justify-content-between align-items-end mt-4 pt-4 border-top">
+                                <small class="text-muted">Generated by YuNet + SFace Biometric Inference Engine &bull; DBU FaceAI</small>
+                                <div class="text-center">
+                                    <div style="width:180px; border-bottom:1px solid #000; margin-bottom:4px;"></div>
+                                    <small class="fw-bold">Department Chair Signature</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 8. SECURITY AUDIT VIEW -->
+                <div class="page-view" id="view-audit">
+                    <div class="glass-panel">
+                        <div class="panel-head">
+                            <div class="panel-title">
+                                <i class="bi bi-shield-check text-success"></i>
+                                <span>Security Audit &amp; Anti-Spoof Defense Logs</span>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="custom-table">
+                                <thead>
+                                    <tr>
+                                        <th>Event ID</th>
+                                        <th>Timestamp</th>
+                                        <th>Detection Event</th>
+                                        <th>Inference Speed</th>
+                                        <th>Liveness Metric</th>
+                                        <th>Defense Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>#EVT-8941</td>
+                                        <td>10:42:15 AM</td>
+                                        <td>Valid Biometric Match (Adis Kidan)</td>
+                                        <td>104 FPS (9.6ms)</td>
+                                        <td>0.998 (Passive Color Freq)</td>
+                                        <td><span class="badge-present">PASSED</span></td>
+                                    </tr>
+                                    <tr style="background:rgba(239, 68, 68, 0.1)">
+                                        <td>#EVT-8940</td>
+                                        <td>10:39:10 AM</td>
+                                        <td>Replay Attack Attempt (Phone Photo)</td>
+                                        <td>108 FPS (9.2ms)</td>
+                                        <td>0.182 (Screen Moiré Detected)</td>
+                                        <td><span class="badge-absent">REJECTED / LOGGED</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>#EVT-8939</td>
+                                        <td>10:38:02 AM</td>
+                                        <td>Valid Biometric Match (Dawit Abebe)</td>
+                                        <td>102 FPS (9.8ms)</td>
+                                        <td>0.995 (Texture Sharpness)</td>
+                                        <td><span class="badge-present">PASSED</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 9. SETTINGS VIEW -->
+                <div class="page-view" id="view-settings">
+                    <div class="glass-panel">
+                        <div class="panel-head">
+                            <div class="panel-title">
+                                <i class="bi bi-sliders text-secondary"></i>
+                                <span>ONNX Model Threshold Parameters</span>
+                            </div>
+                            <button class="btn btn-sm btn-primary" onclick="alert('Biometric model parameters updated successfully!')">Save Parameters</button>
+                        </div>
+
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <label class="form-label small text-muted">SFace 128-D Cosine Threshold (Current: 0.42)</label>
+                                <input type="range" class="form-range" min="0.2" max="0.6" step="0.01" value="0.42">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small text-muted">YuNet Face Detection Confidence (Current: 0.90)</label>
+                                <input type="range" class="form-range" min="0.5" max="0.99" step="0.01" value="0.90">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small text-muted">Anti-Spoofing Liveness Cutoff (Current: 0.95)</label>
+                                <input type="range" class="form-range" min="0.8" max="0.99" step="0.01" value="0.95">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small text-muted">Session Scan Cooldown (15 seconds)</label>
+                                <input type="range" class="form-range" min="5" max="60" step="5" value="15">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
-      </div>
-
-      <div style="margin-top:20px;display:flex;justify-content:flex-end;gap:10px">
-        <button onclick="window.print()" style="padding:8px 16px;background:#0284c7;color:white;border:none;border-radius:6px;font-weight:700;cursor:pointer">Print / Save as PDF</button>
-        <button onclick="closeReportModal()" style="padding:8px 16px;background:#e2e8f0;color:#334155;border:none;border-radius:6px;font-weight:700;cursor:pointer">Close</button>
-      </div>
     </div>
-  </div>
 
-  <script>
-    let presentTotal = 38;
+    <!-- Student ID Card Badge Modal -->
+    <div class="modal fade" id="badgeModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-dark border-secondary text-white">
+                <div class="modal-header border-secondary">
+                    <h5 class="modal-title font-monospace small"><i class="bi bi-qr-code me-2 text-cyan"></i>Official DBU Student ID Badge</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="cr80-badge text-center">
+                        <div class="cr80-header">
+                            <div class="text-start">
+                                <div class="text-cyan fw-bold small text-uppercase">Debre Berhan University</div>
+                                <div class="text-white-50" style="font-size:10px">College of Computing &bull; 2026/2027</div>
+                            </div>
+                            <i class="bi bi-person-bounding-box text-cyan fs-3"></i>
+                        </div>
 
-    // Web Audio Synthesizer for Biometric Chime
-    function playChime(success = true) {
-      try {
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
+                        <!-- Real Photo or Fallback Avatar -->
+                        <div class="mb-3">
+                            <img id="badgePhoto" src="faces/ADIS_1792671218.jpg" class="rounded-3 border border-2 border-info shadow" style="width: 85px; height: 95px; object-fit: cover;" alt="Student">
+                            <div id="badgeAvatarFallback" class="roster-avatar mx-auto shadow" style="width:85px;height:95px;font-size:28px;display:none">AK</div>
+                        </div>
 
-        if (success) {
-          osc.frequency.setValueAtTime(587.33, audioCtx.currentTime); // D5
-          osc.frequency.setValueAtTime(880.00, audioCtx.currentTime + 0.1); // A5
-          gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.35);
-          osc.start();
-          osc.stop(audioCtx.currentTime + 0.35);
-        } else {
-          osc.frequency.setValueAtTime(220, audioCtx.currentTime); // Low A3 error
-          gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
-          osc.start();
-          osc.stop(audioCtx.currentTime + 0.3);
+                        <h5 class="fw-bold mb-1" id="badgeName">Adis Kidan</h5>
+                        <p class="font-monospace text-info small mb-1" id="badgeId">DBU/1219/14</p>
+                        <p class="text-muted small mb-3" id="badgeDept">Computer Science &bull; Year 4</p>
+
+                        <!-- Dynamic SVG QR Code -->
+                        <div class="p-2 bg-white rounded-3 d-inline-block shadow">
+                            <svg width="84" height="84" viewBox="0 0 100 100" fill="#000">
+                                <rect width="100" height="100" fill="#fff"/>
+                                <path d="M10,10 h30 v30 h-30 z M15,15 v20 h20 v-20 z M20,20 h10 v10 h-10 z" />
+                                <path d="M60,10 h30 v30 h-30 z M65,15 v20 h20 v-20 z M70,20 h10 v10 h-10 z" />
+                                <path d="M10,60 h30 v30 h-30 z M15,65 v20 h20 v-20 z M20,70 h10 v10 h-10 z" />
+                                <rect x="45" y="15" width="8" height="8"/>
+                                <rect x="45" y="30" width="8" height="8"/>
+                                <rect x="45" y="45" width="8" height="8"/>
+                                <rect x="15" y="45" width="8" height="8"/>
+                                <rect x="30" y="45" width="8" height="8"/>
+                                <rect x="60" y="55" width="10" height="10"/>
+                                <rect x="75" y="70" width="12" height="12"/>
+                                <rect x="55" y="75" width="10" height="10"/>
+                            </svg>
+                        </div>
+                        <div class="small text-muted font-monospace mt-2" style="font-size:10px">Encrypted Biometric QR Code</div>
+                    </div>
+
+                    <div class="d-flex gap-2 mt-3">
+                        <button class="btn btn-outline-light flex-grow-1" onclick="window.print()">
+                            <i class="bi bi-printer me-1"></i> Print Badge
+                        </button>
+                        <button class="btn btn-primary flex-grow-1" onclick="alert('Student ID Card downloaded as PDF!')">
+                            <i class="bi bi-download me-1"></i> Download PDF
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Student Modal -->
+    <div class="modal fade" id="registerModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-dark border-secondary text-white">
+                <div class="modal-header border-secondary">
+                    <h5 class="modal-title"><i class="bi bi-person-plus-fill me-2 text-primary"></i>Register New Student</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="regForm" onsubmit="handleRegister(event)">
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Full Name</label>
+                            <input type="text" class="form-control bg-black border-secondary text-white" id="regName" required placeholder="e.g. Yonas Mekonnen">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Student ID</label>
+                            <input type="text" class="form-control bg-black border-secondary text-white" id="regId" required placeholder="DBU/1330/14">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Department</label>
+                            <select class="form-select bg-black border-secondary text-white" id="regDept">
+                                <option>Computer Science</option>
+                                <option>Software Engineering</option>
+                                <option>Information Tech</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Student Photo</label>
+                            <input type="file" accept="image/*" class="form-control bg-black border-secondary text-white" id="regPhoto">
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Capture Biometrics &amp; Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Schedule Modal -->
+    <div class="modal fade" id="scheduleModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-dark border-secondary text-white">
+                <div class="modal-header border-secondary">
+                    <h5 class="modal-title"><i class="bi bi-calendar-plus me-2 text-warning"></i>Add Lecture Schedule</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form onsubmit="handleSchedule(event)">
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Course Code &amp; Title</label>
+                            <input type="text" class="form-control bg-black border-secondary text-white" id="schedTitle" required placeholder="CoSc 440: Cloud Computing">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Day of Week</label>
+                            <select class="form-select bg-black border-secondary text-white" id="schedDay">
+                                <option>Monday</option>
+                                <option>Tuesday</option>
+                                <option>Wednesday</option>
+                                <option>Thursday</option>
+                                <option>Friday</option>
+                                <option>Saturday</option>
+                            </select>
+                        </div>
+                        <div class="row g-2 mb-3">
+                            <div class="col-6">
+                                <label class="form-label small text-muted">Time Slot</label>
+                                <input type="text" class="form-control bg-black border-secondary text-white" id="schedTime" required placeholder="08:30 - 10:30 AM">
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label small text-muted">Lecture Hall / Lab</label>
+                                <input type="text" class="form-control bg-black border-secondary text-white" id="schedRoom" required placeholder="Hall C-201">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-warning w-100">Save Timetable Schedule</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Live Clock
+        setInterval(() => {
+            const el = document.getElementById('liveClock');
+            if (el) el.innerText = new Date().toLocaleTimeString();
+        }, 1000);
+
+        // Sidebar Navigation Switcher
+        function switchNav(viewId, el) {
+            document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
+            if (el) el.classList.add('active');
+
+            document.querySelectorAll('.page-view').forEach(v => v.classList.remove('active-view'));
+            const targetView = document.getElementById('view-' + viewId);
+            if (targetView) targetView.classList.add('active-view');
+
+            const pageTitles = {
+                dashboard: '<i class="bi bi-grid-1x2-fill text-primary"></i> <span>Campus Overview Dashboard</span>',
+                scanner: '<i class="bi bi-camera-video-fill text-success"></i> <span>Live Biometric Optical Scanner</span>',
+                students: '<i class="bi bi-people-fill text-info"></i> <span>Students Directory &amp; Biometric Registry</span>',
+                portal: '<i class="bi bi-person-badge-fill text-cyan"></i> <span>Student Self-Service Portal</span>',
+                timetable: '<i class="bi bi-calendar3-week-fill text-warning"></i> <span>Lecture Timetable &amp; Schedule</span>',
+                attendance: '<i class="bi bi-calendar-check-fill text-success"></i> <span>Attendance Master Archive</span>',
+                reports: '<i class="bi bi-file-earmark-pdf-fill text-danger"></i> <span>Official University Reports (PDF)</span>',
+                audit: '<i class="bi bi-shield-check text-success"></i> <span>Security Audit &amp; Anti-Spoof Logs</span>',
+                settings: '<i class="bi bi-sliders text-secondary"></i> <span>Model Hyperparameters</span>'
+            };
+            document.getElementById('topPageTitle').innerHTML = pageTitles[viewId] || '';
+
+            // Close sidebar on mobile
+            document.getElementById('appSidebar').classList.remove('show-sidebar');
         }
-      } catch (e) {}
-    }
 
-    // Start Webcam
-    async function startCamera() {
-      try {
-        const video = document.getElementById('cameraVideo');
-        const stream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 } });
-        video.srcObject = stream;
-        document.getElementById('hudName').innerText = 'OPTICAL FACE TRACKING ACTIVE';
-        document.getElementById('hudName').style.color = '#34d399';
-      } catch (err) {
-        alert('Webcam permission not enabled or not found on device. You can click "Verify Face Match" or tap any student card to test biometric recognition!');
-      }
-    }
+        function switchNavByName(viewId) {
+            const menuMap = {
+                dashboard: 0,
+                scanner: 1,
+                students: 2,
+                portal: 3,
+                timetable: 4,
+                attendance: 5,
+                reports: 6,
+                audit: 7,
+                settings: 8
+            };
+            const items = document.querySelectorAll('.sidebar-menu .menu-item');
+            if (items[menuMap[viewId]]) {
+                switchNav(viewId, items[menuMap[viewId]]);
+            }
+        }
 
-    // Recognize specific student
-    function recognizeStudent(name, id, similarity) {
-      const reticle = document.getElementById('reticleBox');
-      const hudName = document.getElementById('hudName');
-      const hudConf = document.getElementById('hudConfidence');
+        function toggleSidebar() {
+            document.getElementById('appSidebar').classList.toggle('show-sidebar');
+        }
 
-      reticle.style.borderColor = '#10b981';
-      reticle.style.boxShadow = '0 0 30px rgba(16, 185, 129, 0.7)';
-      hudName.innerText = `IDENTIFIED: ${name.toUpperCase()}`;
-      hudName.style.color = '#34d399';
-      hudConf.innerText = `SFace Sim: ${similarity} | Liveness: 0.999 PASS`;
+        // Role Switcher Simulation
+        const roles = [
+            { name: "Administrator", user: "Adis Kidan", roleDesc: "Lead Developer / Admin", initialView: "dashboard" },
+            { name: "Teacher / Lecturer", user: "Dr. Solomon T.", roleDesc: "Department Lecturer", initialView: "scanner" },
+            { name: "Student Portal", user: "Adis Kidan", roleDesc: "Computer Science Scholar", initialView: "portal" }
+        ];
+        let roleIdx = 0;
+        function cycleRole() {
+            roleIdx = (roleIdx + 1) % roles.length;
+            const r = roles[roleIdx];
+            document.getElementById('roleLabel').innerText = `Role: ${r.name}`;
+            document.getElementById('sidebarUser').innerText = r.user;
+            document.getElementById('sidebarRole').innerText = r.roleDesc;
+            switchNavByName(r.initialView);
+        }
 
-      playChime(true);
+        // Web Audio Synthesizer Chime
+        function playBiometricChime(isPass = true) {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
 
-      // Append to table
-      const tbody = document.getElementById('logTbody');
-      const row = document.createElement('tr');
-      row.style.background = 'rgba(16, 185, 129, 0.12)';
-      row.innerHTML = `
-        <td><strong>${name}</strong></td>
-        <td>${id}</td>
-        <td>${new Date().toLocaleTimeString()}</td>
-        <td>${similarity}</td>
-        <td><span class="badge-status-present">✓ PRESENT</span></td>
-      `;
-      tbody.insertBefore(row, tbody.firstChild);
+                if (isPass) {
+                    osc.frequency.setValueAtTime(587.33, ctx.currentTime);
+                    osc.frequency.setValueAtTime(880.00, ctx.currentTime + 0.1);
+                    gain.gain.setValueAtTime(0.12, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.35);
+                } else {
+                    osc.frequency.setValueAtTime(220, ctx.currentTime);
+                    gain.gain.setValueAtTime(0.2, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.3);
+                }
+            } catch (e) {}
+        }
 
-      presentTotal++;
-      document.getElementById('presentCount').innerText = presentTotal;
-      document.getElementById('presenceRate').innerText = `${((presentTotal / 42) * 100).toFixed(1)}% Presence`;
+        // Webcam Activation
+        async function startWebcam() {
+            try {
+                const video = document.getElementById('liveVideo');
+                const img = document.getElementById('uploadedPreview');
+                img.style.display = 'none';
+                video.style.display = 'block';
 
-      setTimeout(() => {
-        reticle.style.borderColor = '#06b6d4';
-        reticle.style.boxShadow = '0 0 25px rgba(6, 182, 212, 0.4)';
-        hudName.innerText = 'SCANNING OPTICAL FIELD...';
-        hudName.style.color = '#7dd3fc';
-      }, 3500);
-    }
+                const stream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 } });
+                video.srcObject = stream;
+                document.getElementById('hudStatus').innerText = 'OPTICAL FACE TRACKING ACTIVE';
+                document.getElementById('hudStatus').style.color = '#34d399';
+            } catch (err) {
+                alert('Webcam access not granted or unavailable. You can tap "Verify Match" or tap any student card below to test the biometric engine output!');
+            }
+        }
 
-    const testPool = [
-      { name: "Kidus Solomon", id: "DBU/1410/14", sim: "99.1%" },
-      { name: "Eden Haile", id: "DBU/1284/14", sim: "98.5%" },
-      { name: "Yonas Mekonnen", id: "DBU/1330/14", sim: "98.9%" },
-      { name: "Tigist Alemu", id: "DBU/1199/14", sim: "97.8%" }
-    ];
-    let poolIdx = 0;
+        // Upload Photo Test
+        function handlePhotoUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                const video = document.getElementById('liveVideo');
+                const img = document.getElementById('uploadedPreview');
+                video.style.display = 'none';
+                img.src = evt.target.result;
+                img.style.display = 'block';
 
-    function triggerRecognition() {
-      const s = testPool[poolIdx % testPool.length];
-      poolIdx++;
-      recognizeStudent(s.name, s.id, s.sim);
-    }
+                // Trigger biometric match on uploaded photo
+                verifyStudent('Adis Kidan', 'DBU/1219/14', '99.2%', evt.target.result);
+            };
+            reader.readAsDataURL(file);
+        }
 
-    // Trigger Anti-Spoof Test
-    function triggerSpoofTest() {
-      const reticle = document.getElementById('reticleBox');
-      const hudName = document.getElementById('hudName');
-      const hudConf = document.getElementById('hudConfidence');
+        // Biometric Match Simulator
+        let presentCount = 38;
+        function verifyStudent(name, id, simScore, photoUrl) {
+            const reticle = document.getElementById('reticle');
+            const hudStatus = document.getElementById('hudStatus');
+            const hudScore = document.getElementById('hudScore');
 
-      reticle.style.borderColor = '#f43f5e';
-      reticle.style.boxShadow = '0 0 35px rgba(244, 63, 94, 0.8)';
-      hudName.innerText = 'REJECTED: SPOOF ATTACK';
-      hudName.style.color = '#f87171';
-      hudConf.innerText = 'Liveness: 0.182 FAIL (Phone Screen Reflection)';
+            reticle.style.borderColor = '#10b981';
+            reticle.style.boxShadow = '0 0 30px rgba(16, 185, 129, 0.7)';
+            hudStatus.innerText = `IDENTIFIED: ${name.toUpperCase()}`;
+            hudStatus.style.color = '#34d399';
+            hudScore.innerText = `SFace Sim: ${simScore} | Liveness: 0.999 PASS`;
 
-      playChime(false);
+            playBiometricChime(true);
 
-      const tbody = document.getElementById('logTbody');
-      const row = document.createElement('tr');
-      row.style.background = 'rgba(244, 63, 94, 0.15)';
-      row.innerHTML = `
-        <td><strong style="color:#f87171">Unknown Subject</strong></td>
-        <td>N/A</td>
-        <td>${new Date().toLocaleTimeString()}</td>
-        <td>Liveness 18%</td>
-        <td><span class="badge-status-spoof">✗ SPOOF DETECTED</span></td>
-      `;
-      tbody.insertBefore(row, tbody.firstChild);
+            // Add to live scanner log
+            const tbody = document.getElementById('scanLogTbody');
+            const tr = document.createElement('tr');
+            tr.style.background = 'rgba(16, 185, 129, 0.12)';
+            tr.innerHTML = `
+                <td><strong>${name}</strong></td>
+                <td>${id}</td>
+                <td>${new Date().toLocaleTimeString()}</td>
+                <td>${simScore}</td>
+                <td><span class="badge-present">✓ PRESENT</span></td>
+            `;
+            tbody.insertBefore(tr, tbody.firstChild);
 
-      setTimeout(() => {
-        reticle.style.borderColor = '#06b6d4';
-        reticle.style.boxShadow = '0 0 25px rgba(6, 182, 212, 0.4)';
-        hudName.innerText = 'SCANNING OPTICAL FIELD...';
-        hudName.style.color = '#7dd3fc';
-      }, 3500);
-    }
+            // Add to master attendance log
+            const masterTbody = document.querySelector('#masterAttendanceTable tbody');
+            if (masterTbody) {
+                const mtr = document.createElement('tr');
+                mtr.innerHTML = `
+                    <td>Oct 29, 2026</td>
+                    <td>${id}</td>
+                    <td><strong>${name}</strong></td>
+                    <td>CoSc 421</td>
+                    <td>${new Date().toLocaleTimeString()}</td>
+                    <td>${simScore}</td>
+                    <td>YuNet+SFace</td>
+                    <td><span class="badge-present">✓ PRESENT</span></td>
+                `;
+                masterTbody.insertBefore(mtr, masterTbody.firstChild);
+            }
 
-    function switchLecture(val) {
-      alert('Switched lecture timetable! Loaded enrolled class roster.');
-    }
+            presentCount++;
+            document.getElementById('dashPresent').innerText = presentCount;
 
-    function openReportModal() {
-      document.getElementById('reportModal').style.display = 'flex';
-    }
-    function closeReportModal() {
-      document.getElementById('reportModal').style.display = 'none';
-    }
-  </script>
+            setTimeout(() => {
+                reticle.style.borderColor = '#06b6d4';
+                reticle.style.boxShadow = '0 0 25px rgba(6, 182, 212, 0.4)';
+                hudStatus.innerText = 'SCANNING OPTICAL FIELD...';
+                hudStatus.style.color = '#7dd3fc';
+            }, 3500);
+        }
+
+        const simList = [
+            { name: "Adis Kidan", id: "DBU/1219/14", sim: "99.4%", photo: "faces/ADIS_1792671218.jpg" },
+            { name: "Abush Bayelign", id: "DBU/1602/16", sim: "98.7%", photo: "faces/1602016_1792687957.jpg" },
+            { name: "Bethlehem Tadesse", id: "DBU/0001/16", sim: "98.9%", photo: "faces/DBU_0001_16_1792669306.jpg" },
+            { name: "Kidus Solomon", id: "DBU/1410/14", sim: "99.1%", photo: "" }
+        ];
+        let simPos = 0;
+        function simulateMatch() {
+            const s = simList[simPos % simList.length];
+            simPos++;
+            verifyStudent(s.name, s.id, s.sim, s.photo);
+        }
+
+        function simulateSpoof() {
+            const reticle = document.getElementById('reticle');
+            const hudStatus = document.getElementById('hudStatus');
+            const hudScore = document.getElementById('hudScore');
+
+            reticle.style.borderColor = '#ef4444';
+            reticle.style.boxShadow = '0 0 30px rgba(239, 68, 68, 0.8)';
+            hudStatus.innerText = 'REJECTED: SPOOF ATTACK DETECTED';
+            hudStatus.style.color = '#f87171';
+            hudScore.innerText = 'Liveness: 0.182 FAIL (Phone Reflection)';
+
+            playBiometricChime(false);
+
+            const tbody = document.getElementById('scanLogTbody');
+            const tr = document.createElement('tr');
+            tr.style.background = 'rgba(239, 68, 68, 0.12)';
+            tr.innerHTML = `
+                <td><strong class="text-danger">Spoof Attempt</strong></td>
+                <td>N/A</td>
+                <td>${new Date().toLocaleTimeString()}</td>
+                <td>18.2%</td>
+                <td><span class="badge-absent">✗ REJECTED</span></td>
+            `;
+            tbody.insertBefore(tr, tbody.firstChild);
+
+            setTimeout(() => {
+                reticle.style.borderColor = '#06b6d4';
+                reticle.style.boxShadow = '0 0 25px rgba(6, 182, 212, 0.4)';
+                hudStatus.innerText = 'SCANNING OPTICAL FIELD...';
+                hudStatus.style.color = '#7dd3fc';
+            }, 3500);
+        }
+
+        // Student Table Search & Filter
+        function filterStudentTable() {
+            const query = document.getElementById('studentSearch').value.toLowerCase();
+            const dept = document.getElementById('deptFilter').value;
+            const rows = document.querySelectorAll('#studentTable tbody tr');
+
+            rows.forEach(r => {
+                const text = r.innerText.toLowerCase();
+                const matchesSearch = text.includes(query);
+                const matchesDept = dept === 'all' || text.includes(dept.toLowerCase());
+                r.style.display = (matchesSearch && matchesDept) ? '' : 'none';
+            });
+        }
+
+        // View Student ID Badge
+        function viewBadge(name, id, dept, photoUrl) {
+            document.getElementById('badgeName').innerText = name;
+            document.getElementById('badgeId').innerText = id;
+            document.getElementById('badgeDept').innerText = dept + ' • Year 4';
+            
+            const img = document.getElementById('badgePhoto');
+            const fallback = document.getElementById('badgeAvatarFallback');
+
+            if (photoUrl) {
+                img.src = photoUrl;
+                img.style.display = 'inline-block';
+                fallback.style.display = 'none';
+            } else {
+                img.style.display = 'none';
+                fallback.innerText = name.split(' ').map(n=>n[0]).join('');
+                fallback.style.display = 'grid';
+            }
+
+            const modal = new bootstrap.Modal(document.getElementById('badgeModal'));
+            modal.show();
+        }
+
+        // Register Modal
+        function openRegisterModal() {
+            const m = new bootstrap.Modal(document.getElementById('registerModal'));
+            m.show();
+        }
+        function handleRegister(e) {
+            e.preventDefault();
+            const name = document.getElementById('regName').value;
+            const id = document.getElementById('regId').value;
+            const dept = document.getElementById('regDept').value;
+
+            const tbody = document.querySelector('#studentTable tbody');
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><div class="roster-avatar" style="background:#0284c7">${name.split(' ').map(n=>n[0]).join('')}</div></td>
+                <td><code class="text-info fw-bold">${id}</code></td>
+                <td><strong>${name}</strong></td>
+                <td>${dept}</td>
+                <td>Year 4 - Sec A</td>
+                <td><span class="badge bg-success-subtle text-success">100% (New)</span></td>
+                <td><button class="btn btn-sm btn-outline-info" onclick="viewBadge('${name}', '${id}', '${dept}', '')">View ID Card</button></td>
+            `;
+            tbody.insertBefore(tr, tbody.firstChild);
+
+            bootstrap.Modal.getInstance(document.getElementById('registerModal')).hide();
+            alert(`Student ${name} (${id}) enrolled and face biometrics registered into YuNet/SFace database!`);
+        }
+
+        // Add Schedule
+        function openScheduleModal() {
+            new bootstrap.Modal(document.getElementById('scheduleModal')).show();
+        }
+        function handleSchedule(e) {
+            e.preventDefault();
+            const title = document.getElementById('schedTitle').value;
+            const day = document.getElementById('schedDay').value;
+            const time = document.getElementById('schedTime').value;
+            const room = document.getElementById('schedRoom').value;
+
+            const tbody = document.querySelector('#timetableTable tbody');
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><span class="badge bg-secondary">${day}</span></td>
+                <td><code class="text-info fw-bold">${title.split(':')[0]}</code></td>
+                <td><strong>${title.split(':')[1] || title}</strong></td>
+                <td>${time}</td>
+                <td>${room}</td>
+                <td>Department Faculty</td>
+                <td><span class="badge bg-secondary">Scheduled</span></td>
+            `;
+            tbody.appendChild(tr);
+
+            bootstrap.Modal.getInstance(document.getElementById('scheduleModal')).hide();
+            alert(`Lecture schedule added for ${title}!`);
+        }
+
+        // Export CSV
+        function exportCSV() {
+            let csv = "Date,Student ID,Student Name,Course,Timestamp,Similarity,Method,Status\n";
+            const rows = document.querySelectorAll('#masterAttendanceTable tbody tr');
+            rows.forEach(r => {
+                const cols = Array.from(r.querySelectorAll('td')).map(td => `"${td.innerText.replace(/"/g, '""').trim()}"`);
+                csv += cols.join(",") + "\n";
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `DBU_Attendance_Register_${new Date().toISOString().slice(0,10)}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+    </script>
 </body>
 </html>
