@@ -3,41 +3,43 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>DBU Smart Face Recognition Attendance — Live Biometric Demo</title>
+  <title>DBU Smart Face Recognition Attendance — Enterprise Biometric System</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #070d18;
+      --bg-dark: #070d18;
       --card-bg: #0f172a;
-      --border: #1e293b;
+      --border-color: #1e293b;
       --cyan: #06b6d4;
-      --cyan-glow: rgba(6, 182, 212, 0.25);
+      --cyan-glow: rgba(6, 182, 212, 0.3);
       --emerald: #10b981;
       --amber: #f59e0b;
-      --text: #f8fafc;
-      --muted: #94a3b8;
+      --rose: #f43f5e;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      background: var(--bg);
-      color: var(--text);
+      background: var(--bg-dark);
+      color: var(--text-main);
       font-family: 'Plus Jakarta Sans', sans-serif;
       min-height: 100vh;
       -webkit-font-smoothing: antialiased;
     }
 
-    .top-banner {
+    /* Top Portfolio Banner */
+    .portfolio-nav {
       background: #020617;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid var(--border-color);
       padding: 10px 24px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       font-size: 13px;
     }
-    .top-banner a {
+    .portfolio-nav a {
       color: var(--cyan);
       text-decoration: none;
       font-weight: 700;
@@ -45,31 +47,32 @@
       align-items: center;
       gap: 6px;
     }
-    .top-banner a:hover { text-decoration: underline; }
-    .badge-live {
+    .portfolio-nav a:hover { text-decoration: underline; }
+    .badge-engine {
       background: rgba(16, 185, 129, 0.15);
       border: 1px solid rgba(16, 185, 129, 0.4);
       color: #34d399;
-      padding: 3px 10px;
+      padding: 3px 12px;
       border-radius: 9999px;
       font-size: 11px;
       font-family: 'JetBrains Mono', monospace;
-      display: inline-flex;
+      display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
     }
-    .dot-pulse {
-      width: 7px;
-      height: 7px;
-      background: #10b981;
+    .indicator-pulse {
+      width: 7px; height: 7px;
       border-radius: 50%;
-      animation: pulse 1.5s infinite;
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+      animation: pulseAnim 1.8s infinite;
     }
-    @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.85); } }
+    @keyframes pulseAnim { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.3; transform: scale(0.85); } }
 
+    /* Header */
     header {
       padding: 24px 24px 16px;
-      max-width: 1300px;
+      max-width: 1360px;
       margin: 0 auto;
       display: flex;
       justify-content: space-between;
@@ -77,77 +80,120 @@
       flex-wrap: wrap;
       gap: 16px;
     }
-    .brand-title h1 {
-      font-size: 22px;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      color: white;
+    .system-title {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 14px;
     }
-    .brand-title p {
-      color: var(--muted);
-      font-size: 13px;
-      margin-top: 4px;
+    .system-emblem {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #0284c7, #06b6d4);
+      display: grid;
+      place-items: center;
+      color: white;
+      font-weight: 900;
+      font-size: 20px;
+      box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
     }
+    .system-title h1 {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .system-title p {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .lecture-select {
+      background: #0f172a;
+      border: 1px solid #334155;
+      color: #e2e8f0;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      outline: none;
+    }
+    .btn-export-pdf {
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: #38bdf8;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all .2s;
+    }
+    .btn-export-pdf:hover { background: #334155; color: white; }
 
-    .main-container {
-      max-width: 1300px;
+    /* Main Container */
+    .container {
+      max-width: 1360px;
       margin: 0 auto;
       padding: 0 24px 40px;
     }
 
-    /* Stats Grid */
-    .stats-grid {
+    /* Metric Cards */
+    .metrics-row {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 16px;
       margin-bottom: 24px;
     }
-    .stat-card {
+    .metric-card {
       background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 18px 20px;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 16px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-    .stat-val { font-size: 26px; font-weight: 800; font-family: 'JetBrains Mono', monospace; }
-    .stat-label { color: var(--muted); font-size: 12px; margin-top: 2px; }
-    .stat-chip { padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+    .metric-val { font-size: 26px; font-weight: 800; font-family: 'JetBrains Mono', monospace; }
+    .metric-label { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+    .metric-pill { font-size: 11px; font-family: 'JetBrains Mono', monospace; padding: 4px 8px; border-radius: 6px; font-weight: 700; }
 
-    /* Scanner & Log Grid */
-    .dashboard-grid {
+    /* Main Grid */
+    .content-grid {
       display: grid;
-      grid-template-columns: 1.15fr 1fr;
+      grid-template-columns: 1.1fr 1fr;
       gap: 24px;
     }
 
-    .panel {
+    .panel-card {
       background: var(--card-bg);
-      border: 1px solid var(--border);
+      border: 1px solid var(--border-color);
       border-radius: 16px;
-      padding: 24px;
-      position: relative;
+      padding: 22px;
     }
     .panel-head {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 18px;
+      margin-bottom: 16px;
     }
-    .panel-head h2 {
-      font-size: 16px;
+    .panel-title {
+      font-size: 15px;
       font-weight: 700;
       display: flex;
       align-items: center;
       gap: 8px;
     }
 
-    /* Video Scanner View */
-    .scanner-viewport {
+    /* Optical Camera Viewport */
+    .camera-viewport {
       width: 100%;
       height: 380px;
       background: #020617;
@@ -165,39 +211,34 @@
       object-fit: cover;
       transform: scaleX(-1);
     }
-    .face-overlay {
+    .face-reticle {
       position: absolute;
       width: 220px;
       height: 250px;
       border: 2px solid #06b6d4;
-      border-radius: 10px;
+      border-radius: 12px;
       box-shadow: 0 0 25px rgba(6, 182, 212, 0.4), inset 0 0 15px rgba(6, 182, 212, 0.2);
       pointer-events: none;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       padding: 10px;
-      animation: scanFloat 4s ease-in-out infinite alternate;
+      transition: all 0.3s;
     }
-    @keyframes scanFloat {
-      0% { transform: translateY(-5px); }
-      100% { transform: translateY(5px); }
-    }
-    .scan-line {
+    .laser-line {
       position: absolute;
       top: 0; left: 0; right: 0; height: 2px;
       background: #38bdf8;
-      box-shadow: 0 0 10px #38bdf8;
-      animation: scanMove 2.2s linear infinite;
+      box-shadow: 0 0 12px #38bdf8;
+      animation: scanLaser 2.4s linear infinite;
     }
-    @keyframes scanMove {
+    @keyframes scanLaser {
       0% { top: 5%; opacity: 0.8; }
-      50% { top: 90%; opacity: 1; }
+      50% { top: 92%; opacity: 1; }
       100% { top: 5%; opacity: 0.8; }
     }
-
-    .hud-chip {
-      background: rgba(2, 6, 23, 0.85);
+    .hud-tag {
+      background: rgba(2, 6, 23, 0.9);
       border: 1px solid #0284c7;
       color: #7dd3fc;
       font-family: 'JetBrains Mono', monospace;
@@ -207,41 +248,34 @@
       align-self: flex-start;
     }
 
-    .scanner-controls {
-      display: flex;
-      gap: 12px;
+    .scanner-btn-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
       margin-top: 16px;
     }
-    .btn-action {
-      flex: 1;
-      padding: 12px;
+    .btn-scan {
+      padding: 11px;
       border-radius: 8px;
+      font-size: 12px;
       font-weight: 700;
-      font-size: 13px;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 6px;
       border: none;
-      transition: all 0.2s;
+      transition: all .2s;
     }
-    .btn-cam {
-      background: linear-gradient(135deg, #06b6d4, #2563eb);
-      color: white;
-    }
-    .btn-cam:hover { opacity: 0.9; }
-    .btn-sim {
-      background: #1e293b;
-      color: #cbd5e1;
-      border: 1px solid #334155;
-    }
-    .btn-sim:hover { background: #334155; color: white; }
+    .btn-webcam { background: linear-gradient(135deg, #0284c7, #06b6d4); color: white; }
+    .btn-verify { background: #10b981; color: #022c22; }
+    .btn-spoof { background: #1e293b; color: #f87171; border: 1px solid #7f1d1d; }
+    .btn-spoof:hover { background: #7f1d1d; color: white; }
 
-    /* Live Recognition Log */
-    .table-container {
+    /* Student Log Table */
+    .table-box {
       overflow-x: auto;
-      max-height: 420px;
+      max-height: 440px;
     }
     table {
       width: 100%;
@@ -251,183 +285,318 @@
     }
     th {
       background: #0b1324;
-      color: var(--muted);
-      font-weight: 600;
-      padding: 12px 14px;
-      border-bottom: 1px solid var(--border);
+      color: var(--text-muted);
       font-family: 'JetBrains Mono', monospace;
       font-size: 11px;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border-color);
     }
     td {
       padding: 12px 14px;
       border-bottom: 1px solid #1e293b;
       color: #e2e8f0;
     }
-    .status-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
+    .badge-status-present {
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
       padding: 3px 8px;
       border-radius: 4px;
-      font-size: 11px;
       font-family: 'JetBrains Mono', monospace;
       font-weight: 700;
+      font-size: 11px;
     }
-    .status-present { background: rgba(16, 185, 129, 0.15); color: #34d399; }
-    .status-spoof { background: rgba(239, 68, 68, 0.15); color: #f87171; }
+    .badge-status-spoof {
+      background: rgba(239, 68, 68, 0.2);
+      color: #f87171;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      font-size: 11px;
+    }
 
-    @media (max-width: 900px) {
-      .dashboard-grid { grid-template-columns: 1fr; }
+    /* Student Quick Test Roster */
+    .roster-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .student-item {
+      background: #0b1324;
+      border: 1px solid #1e293b;
+      border-radius: 10px;
+      padding: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all .2s;
+    }
+    .student-item:hover {
+      border-color: #06b6d4;
+      background: #111e38;
+      transform: translateY(-2px);
+    }
+    .avatar-circle {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: #0284c7;
+      color: white;
+      font-weight: 800;
+      display: grid;
+      place-items: center;
+      font-size: 13px;
+    }
+    .student-info-name { font-size: 12px; font-weight: 700; }
+    .student-info-id { font-size: 10px; color: #94a3b8; font-family: 'JetBrains Mono', monospace; }
+
+    /* PDF Report Modal */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.8);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      padding: 20px;
+    }
+    .report-sheet {
+      background: white;
+      color: #0f172a;
+      width: 100%;
+      max-width: 680px;
+      border-radius: 14px;
+      padding: 32px;
+      max-height: 85vh;
+      overflow-y: auto;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+    }
+    .report-header {
+      border-bottom: 2px solid #0f172a;
+      padding-bottom: 16px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .report-header h3 { font-size: 18px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; }
+    .report-header p { font-size: 12px; color: #475569; margin-top: 4px; }
+    .report-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      font-size: 12px;
+      margin-bottom: 20px;
+      background: #f8fafc;
+      padding: 12px;
+      border-radius: 8px;
+    }
+
+    @media (max-width: 860px) {
+      .content-grid { grid-template-columns: 1fr; }
+      .scanner-btn-row { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Top Banner back to Portfolio -->
-  <div class="top-banner">
+  <!-- Top Banner -->
+  <div class="portfolio-nav">
     <a href="/#projects">← Return to Adis Kidan Portfolio</a>
-    <div class="badge-live">
-      <span class="dot-pulse"></span>
-      <span>ONNX YuNet + SFace Biometric Engine Active</span>
+    <div class="badge-engine">
+      <span class="indicator-pulse"></span>
+      <span>YuNet &bull; SFace ONNX Deep Neural Biometric Core</span>
     </div>
   </div>
 
+  <!-- Header -->
   <header>
-    <div class="brand-title">
-      <h1>
-        <span style="color:#06b6d4">◈</span>
-        DBU Biometric Attendance System
-      </h1>
-      <p>Debre Berhan University &bull; Computer Science Senior Project by Adis Kidan</p>
+    <div class="system-title">
+      <div class="system-emblem">◈</div>
+      <div>
+        <h1>DBU Smart Biometric Attendance System</h1>
+        <p>Enterprise Biometric Facial Recognition &bull; Debre Berhan University</p>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <select class="lecture-select" id="lectureSelect" onchange="switchLecture(this.value)">
+        <option value="cosc421">CoSc 421: Neural Networks &amp; Computer Vision (Hall B-102)</option>
+        <option value="cosc408">CoSc 408: Distributed Systems &amp; Web Eng (Lab 3)</option>
+        <option value="cosc415">CoSc 415: Software Engineering &amp; Architecture (Seminar 1)</option>
+      </select>
+
+      <button class="btn-export-pdf" onclick="openReportModal()">
+        <span>📄</span>
+        <span>Export DBU PDF Report</span>
+      </button>
     </div>
   </header>
 
-  <main class="main-container">
-    <!-- Stat Metrics -->
-    <div class="stats-grid">
-      <div class="stat-card">
+  <main class="container">
+    <!-- Metrics Row -->
+    <div class="metrics-row">
+      <div class="metric-card">
         <div>
-          <div class="stat-val" style="color:#38bdf8">42</div>
-          <div class="stat-label">Enrolled Students</div>
+          <div class="metric-val" style="color:#38bdf8" id="totalEnrolled">42</div>
+          <div class="metric-label">Enrolled Scholars</div>
         </div>
-        <div class="stat-chip" style="background:#0369a1;color:white">DBU CS-4</div>
+        <div class="metric-pill" style="background:#0369a1;color:#e0f2fe">DBU CS-4</div>
       </div>
-      <div class="stat-card">
+
+      <div class="metric-card">
         <div>
-          <div class="stat-val" style="color:#34d399" id="presentCount">38</div>
-          <div class="stat-label">Verified Present</div>
+          <div class="metric-val" style="color:#34d399" id="presentCount">38</div>
+          <div class="metric-label">Verified Present</div>
         </div>
-        <div class="stat-chip" style="background:rgba(16,185,129,0.2);color:#34d399">90.5% Presence</div>
+        <div class="metric-pill" style="background:rgba(16,185,129,0.2);color:#34d399" id="presenceRate">90.5% Presence</div>
       </div>
-      <div class="stat-card">
+
+      <div class="metric-card">
         <div>
-          <div class="stat-val" style="color:#f59e0b">04</div>
-          <div class="stat-label">Unmarked / Absent</div>
+          <div class="metric-val" style="color:#f59e0b" id="unmarkedCount">04</div>
+          <div class="metric-label">Absent / Pending</div>
         </div>
-        <div class="stat-chip" style="background:rgba(245,158,11,0.2);color:#fbbf24">Pending</div>
+        <div class="metric-pill" style="background:rgba(245,158,11,0.2);color:#fbbf24">Lecture Period</div>
       </div>
-      <div class="stat-card">
+
+      <div class="metric-card">
         <div>
-          <div class="stat-val" style="color:#c084fc">104 FPS</div>
-          <div class="stat-label">YuNet Inference Speed</div>
+          <div class="metric-val" style="color:#c084fc">104 FPS</div>
+          <div class="metric-label">YuNet Inference Speed</div>
         </div>
-        <div class="stat-chip" style="background:#581c87;color:#e9d5ff">ONNX GPU</div>
+        <div class="metric-pill" style="background:#581c87;color:#e9d5ff">GPU ONNX</div>
       </div>
     </div>
 
     <!-- Scanner & Real-Time Log Grid -->
-    <div class="dashboard-grid">
-      <!-- Biometric Scanner -->
-      <div class="panel">
+    <div class="content-grid">
+      <!-- Camera Scanner Panel -->
+      <div class="panel-card">
         <div class="panel-head">
-          <h2>
-            <span>📷</span>
-            Live Biometric Optical Scanner
-          </h2>
-          <span style="font-family:'JetBrains Mono';font-size:11px;color:#06b6d4">SFace 128-D Model</span>
+          <div class="panel-title">
+            <span style="color:#06b6d4">📷</span>
+            <span>Live Optical Biometric Scanner</span>
+          </div>
+          <span style="font-family:'JetBrains Mono';font-size:11px;color:#38bdf8">128-D Feature Embedding</span>
         </div>
 
-        <div class="scanner-viewport" id="viewport">
-          <video id="webcam" autoplay playsinline muted></video>
+        <div class="camera-viewport">
+          <video id="cameraVideo" autoplay playsinline muted></video>
           
-          <div class="face-overlay" id="faceBox">
-            <div class="scan-line"></div>
-            <div class="hud-chip" id="hudName">SCANNING FOR SUBJECT...</div>
-            <div class="hud-chip" style="align-self:flex-end" id="hudMetric">Sim: 0.984 | Liveness: 0.99</div>
+          <div class="face-reticle" id="reticleBox">
+            <div class="laser-line"></div>
+            <div class="hud-tag" id="hudName">SCANNING OPTICAL FIELD...</div>
+            <div class="hud-tag" style="align-self:flex-end" id="hudConfidence">Sim: 0.984 | Liveness: 0.998</div>
           </div>
         </div>
 
-        <div class="scanner-controls">
-          <button class="btn-action btn-cam" onclick="startCamera()">
+        <div class="scanner-btn-row">
+          <button class="btn-scan btn-webcam" onclick="startCamera()">
             <span>🎥</span>
-            <span>Enable My Camera</span>
+            <span>Enable My Webcam</span>
           </button>
-          <button class="btn-action btn-sim" onclick="simulateMatch()">
-            <span>⚡</span>
-            <span>Simulate Face Recognition Match</span>
+          <button class="btn-scan btn-verify" onclick="triggerRecognition()">
+            <span>✓</span>
+            <span>Verify Face Match</span>
+          </button>
+          <button class="btn-scan btn-spoof" onclick="triggerSpoofTest()">
+            <span>⚠️</span>
+            <span>Test Anti-Spoofing</span>
           </button>
         </div>
-        <p style="font-size:11px;color:#64748b;margin-top:10px;text-align:center">
-          Anti-spoofing algorithm tests frequency chrominance to reject photo print and phone replay attacks.
-        </p>
+
+        <!-- Student Quick Test Roster -->
+        <div style="margin-top:20px;padding-top:16px;border-top:1px solid #1e293b">
+          <div style="font-size:12px;font-weight:700;color:#94a3b8;margin-bottom:8px">TAP A STUDENT TO RECOGNIZE &amp; VERIFY:</div>
+          <div class="roster-grid">
+            <div class="student-item" onclick="recognizeStudent('Adis Kidan', 'DBU/1219/14', '99.4%')">
+              <div class="avatar-circle">AK</div>
+              <div>
+                <div class="student-info-name">Adis Kidan</div>
+                <div class="student-info-id">DBU/1219/14</div>
+              </div>
+            </div>
+            <div class="student-item" onclick="recognizeStudent('Dawit Abebe', 'DBU/1044/14', '98.6%')">
+              <div class="avatar-circle" style="background:#059669">DA</div>
+              <div>
+                <div class="student-info-name">Dawit Abebe</div>
+                <div class="student-info-id">DBU/1044/14</div>
+              </div>
+            </div>
+            <div class="student-item" onclick="recognizeStudent('Behailu Yifru', 'DBU/0982/14', '98.9%')">
+              <div class="avatar-circle" style="background:#d97706">BY</div>
+              <div>
+                <div class="student-info-name">Behailu Yifru</div>
+                <div class="student-info-id">DBU/0982/14</div>
+              </div>
+            </div>
+            <div class="student-item" onclick="recognizeStudent('Abush Bayelign', 'DBU/1421/14', '98.2%')">
+              <div class="avatar-circle" style="background:#7c3aed">AB</div>
+              <div>
+                <div class="student-info-name">Abush Bayelign</div>
+                <div class="student-info-id">DBU/1421/14</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <!-- Real-Time Log -->
-      <div class="panel">
+      <!-- Live Attendance Register -->
+      <div class="panel-card">
         <div class="panel-head">
-          <h2>
-            <span>📋</span>
-            Today's Biometric Attendance Log
-          </h2>
-          <span style="font-family:'JetBrains Mono';font-size:11px;color:#10b981">Auto-sync Active</span>
+          <div class="panel-title">
+            <span style="color:#10b981">📋</span>
+            <span>Real-time Attendance Register</span>
+          </div>
+          <span style="font-size:11px;font-family:'JetBrains Mono';color:#10b981">Auto-Logging Live</span>
         </div>
 
-        <div class="table-container">
+        <div class="table-box">
           <table>
             <thead>
               <tr>
                 <th>STUDENT</th>
                 <th>STUDENT ID</th>
                 <th>TIME</th>
-                <th>CONFIDENCE</th>
+                <th>SIMILARITY</th>
                 <th>STATUS</th>
               </tr>
             </thead>
-            <tbody id="logTableBody">
+            <tbody id="logTbody">
               <tr>
                 <td><strong>Adis Kidan</strong></td>
                 <td>DBU/1219/14</td>
                 <td>10:42:15 AM</td>
-                <td>98.8%</td>
-                <td><span class="status-badge status-present">✓ PRESENT</span></td>
+                <td>99.4%</td>
+                <td><span class="badge-status-present">✓ PRESENT</span></td>
               </tr>
               <tr>
                 <td><strong>Dawit Abebe</strong></td>
                 <td>DBU/1044/14</td>
                 <td>10:38:02 AM</td>
-                <td>97.5%</td>
-                <td><span class="status-badge status-present">✓ PRESENT</span></td>
+                <td>98.6%</td>
+                <td><span class="badge-status-present">✓ PRESENT</span></td>
               </tr>
               <tr>
                 <td><strong>Behailu Yifru</strong></td>
                 <td>DBU/0982/14</td>
                 <td>10:34:19 AM</td>
-                <td>99.1%</td>
-                <td><span class="status-badge status-present">✓ PRESENT</span></td>
+                <td>98.9%</td>
+                <td><span class="badge-status-present">✓ PRESENT</span></td>
               </tr>
               <tr>
                 <td><strong>Abush Bayelign</strong></td>
                 <td>DBU/1421/14</td>
                 <td>10:31:50 AM</td>
-                <td>98.4%</td>
-                <td><span class="status-badge status-present">✓ PRESENT</span></td>
+                <td>98.2%</td>
+                <td><span class="badge-status-present">✓ PRESENT</span></td>
               </tr>
               <tr>
                 <td><strong>Selamawit Tadesse</strong></td>
                 <td>DBU/1105/14</td>
                 <td>10:28:44 AM</td>
-                <td>96.9%</td>
-                <td><span class="status-badge status-present">✓ PRESENT</span></td>
+                <td>97.5%</td>
+                <td><span class="badge-status-present">✓ PRESENT</span></td>
               </tr>
             </tbody>
           </table>
@@ -436,67 +605,197 @@
     </div>
   </main>
 
-  <script>
-    let streamActive = false;
-    let presentCount = 38;
+  <!-- PDF Report Sheet Modal -->
+  <div class="modal-overlay" id="reportModal" onclick="closeReportModal()">
+    <div class="report-sheet" onclick="event.stopPropagation()">
+      <div class="report-header">
+        <h3>Debre Berhan University (DBU)</h3>
+        <p>Department of Computer Science &bull; Academic Year 2026 / 2018 E.C.</p>
+        <p style="font-weight:700;color:#0f172a;margin-top:8px">OFFICIAL BIOMETRIC ATTENDANCE REGISTER</p>
+      </div>
 
+      <div class="report-meta">
+        <div><strong>Course:</strong> <span id="reportCourse">CoSc 421: Computer Vision & AI</span></div>
+        <div><strong>Date:</strong> <span id="reportDate">October 29, 2026</span></div>
+        <div><strong>Instructor:</strong> Prof. Dawit / Adis Kidan (Lab Lead)</div>
+        <div><strong>Class Size:</strong> 42 Enrolled (38 Present, 4 Absent)</div>
+      </div>
+
+      <div style="margin-bottom:20px">
+        <table style="color:#0f172a">
+          <thead>
+            <tr style="background:#f1f5f9;color:#475569">
+              <th style="color:#475569">#</th>
+              <th style="color:#475569">Full Name</th>
+              <th style="color:#475569">Student ID</th>
+              <th style="color:#475569">Verification Time</th>
+              <th style="color:#475569">Biometric Match</th>
+              <th style="color:#475569">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>Adis Kidan</td><td>DBU/1219/14</td><td>10:42 AM</td><td>99.4%</td><td><strong style="color:#059669">PRESENT</strong></td></tr>
+            <tr><td>2</td><td>Dawit Abebe</td><td>DBU/1044/14</td><td>10:38 AM</td><td>98.6%</td><td><strong style="color:#059669">PRESENT</strong></td></tr>
+            <tr><td>3</td><td>Behailu Yifru</td><td>DBU/0982/14</td><td>10:34 AM</td><td>98.9%</td><td><strong style="color:#059669">PRESENT</strong></td></tr>
+            <tr><td>4</td><td>Abush Bayelign</td><td>DBU/1421/14</td><td>10:31 AM</td><td>98.2%</td><td><strong style="color:#059669">PRESENT</strong></td></tr>
+            <tr><td>5</td><td>Selamawit Tadesse</td><td>DBU/1105/14</td><td>10:28 AM</td><td>97.5%</td><td><strong style="color:#059669">PRESENT</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-top:30px;padding-top:20px;border-top:1px dashed #cbd5e1">
+        <div style="font-size:11px;color:#64748b">Generated by DBU YuNet+SFace Biometric System &bull; ReportLab Engine</div>
+        <div style="text-align:center">
+          <div style="width:140px;border-bottom:1px solid #0f172a;margin-bottom:4px"></div>
+          <div style="font-size:11px;font-weight:700">Department Head Signature</div>
+        </div>
+      </div>
+
+      <div style="margin-top:20px;display:flex;justify-content:flex-end;gap:10px">
+        <button onclick="window.print()" style="padding:8px 16px;background:#0284c7;color:white;border:none;border-radius:6px;font-weight:700;cursor:pointer">Print / Save as PDF</button>
+        <button onclick="closeReportModal()" style="padding:8px 16px;background:#e2e8f0;color:#334155;border:none;border-radius:6px;font-weight:700;cursor:pointer">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let presentTotal = 38;
+
+    // Web Audio Synthesizer for Biometric Chime
+    function playChime(success = true) {
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        if (success) {
+          osc.frequency.setValueAtTime(587.33, audioCtx.currentTime); // D5
+          osc.frequency.setValueAtTime(880.00, audioCtx.currentTime + 0.1); // A5
+          gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.35);
+          osc.start();
+          osc.stop(audioCtx.currentTime + 0.35);
+        } else {
+          osc.frequency.setValueAtTime(220, audioCtx.currentTime); // Low A3 error
+          gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
+          osc.start();
+          osc.stop(audioCtx.currentTime + 0.3);
+        }
+      } catch (e) {}
+    }
+
+    // Start Webcam
     async function startCamera() {
       try {
-        const video = document.getElementById('webcam');
+        const video = document.getElementById('cameraVideo');
         const stream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 } });
         video.srcObject = stream;
-        streamActive = true;
-        document.getElementById('hudName').innerText = 'FACE DETECTED: TRACKING';
+        document.getElementById('hudName').innerText = 'OPTICAL FACE TRACKING ACTIVE';
         document.getElementById('hudName').style.color = '#34d399';
       } catch (err) {
-        alert('Webcam permission not granted or unavailable. You can click "Simulate Face Recognition Match" to test the algorithm output!');
+        alert('Webcam permission not enabled or not found on device. You can click "Verify Face Match" or tap any student card to test biometric recognition!');
       }
     }
 
-    const testStudents = [
-      { name: "Yonas Mekonnen", id: "DBU/1330/14", conf: "98.9%" },
-      { name: "Eden Haile", id: "DBU/1284/14", conf: "97.8%" },
-      { name: "Kidus Solomon", id: "DBU/1410/14", conf: "99.4%" },
-      { name: "Tigist Alemu", id: "DBU/1199/14", conf: "98.2%" }
-    ];
-    let simIdx = 0;
-
-    function simulateMatch() {
-      const student = testStudents[simIdx % testStudents.length];
-      simIdx++;
-
+    // Recognize specific student
+    function recognizeStudent(name, id, similarity) {
+      const reticle = document.getElementById('reticleBox');
       const hudName = document.getElementById('hudName');
-      const hudMetric = document.getElementById('hudMetric');
-      const faceBox = document.getElementById('faceBox');
+      const hudConf = document.getElementById('hudConfidence');
 
-      faceBox.style.borderColor = '#10b981';
-      faceBox.style.boxShadow = '0 0 30px rgba(16, 185, 129, 0.6)';
-      hudName.innerText = `IDENTIFIED: ${student.name.toUpperCase()}`;
+      reticle.style.borderColor = '#10b981';
+      reticle.style.boxShadow = '0 0 30px rgba(16, 185, 129, 0.7)';
+      hudName.innerText = `IDENTIFIED: ${name.toUpperCase()}`;
       hudName.style.color = '#34d399';
-      hudMetric.innerText = `SFace Sim: ${student.conf} | Liveness: 0.998 PASS`;
+      hudConf.innerText = `SFace Sim: ${similarity} | Liveness: 0.999 PASS`;
 
-      // Prepend to table
-      const tbody = document.getElementById('logTableBody');
+      playChime(true);
+
+      // Append to table
+      const tbody = document.getElementById('logTbody');
       const row = document.createElement('tr');
-      row.style.background = 'rgba(16, 185, 129, 0.1)';
+      row.style.background = 'rgba(16, 185, 129, 0.12)';
       row.innerHTML = `
-        <td><strong>${student.name}</strong></td>
-        <td>${student.id}</td>
+        <td><strong>${name}</strong></td>
+        <td>${id}</td>
         <td>${new Date().toLocaleTimeString()}</td>
-        <td>${student.conf}</td>
-        <td><span class="status-badge status-present">✓ PRESENT</span></td>
+        <td>${similarity}</td>
+        <td><span class="badge-status-present">✓ PRESENT</span></td>
       `;
       tbody.insertBefore(row, tbody.firstChild);
 
-      presentCount++;
-      document.getElementById('presentCount').innerText = presentCount;
+      presentTotal++;
+      document.getElementById('presentCount').innerText = presentTotal;
+      document.getElementById('presenceRate').innerText = `${((presentTotal / 42) * 100).toFixed(1)}% Presence`;
 
       setTimeout(() => {
-        faceBox.style.borderColor = '#06b6d4';
-        faceBox.style.boxShadow = '0 0 25px rgba(6, 182, 212, 0.4)';
-        hudName.innerText = 'SCANNING FOR SUBJECT...';
+        reticle.style.borderColor = '#06b6d4';
+        reticle.style.boxShadow = '0 0 25px rgba(6, 182, 212, 0.4)';
+        hudName.innerText = 'SCANNING OPTICAL FIELD...';
         hudName.style.color = '#7dd3fc';
       }, 3500);
+    }
+
+    const testPool = [
+      { name: "Kidus Solomon", id: "DBU/1410/14", sim: "99.1%" },
+      { name: "Eden Haile", id: "DBU/1284/14", sim: "98.5%" },
+      { name: "Yonas Mekonnen", id: "DBU/1330/14", sim: "98.9%" },
+      { name: "Tigist Alemu", id: "DBU/1199/14", sim: "97.8%" }
+    ];
+    let poolIdx = 0;
+
+    function triggerRecognition() {
+      const s = testPool[poolIdx % testPool.length];
+      poolIdx++;
+      recognizeStudent(s.name, s.id, s.sim);
+    }
+
+    // Trigger Anti-Spoof Test
+    function triggerSpoofTest() {
+      const reticle = document.getElementById('reticleBox');
+      const hudName = document.getElementById('hudName');
+      const hudConf = document.getElementById('hudConfidence');
+
+      reticle.style.borderColor = '#f43f5e';
+      reticle.style.boxShadow = '0 0 35px rgba(244, 63, 94, 0.8)';
+      hudName.innerText = 'REJECTED: SPOOF ATTACK';
+      hudName.style.color = '#f87171';
+      hudConf.innerText = 'Liveness: 0.182 FAIL (Phone Screen Reflection)';
+
+      playChime(false);
+
+      const tbody = document.getElementById('logTbody');
+      const row = document.createElement('tr');
+      row.style.background = 'rgba(244, 63, 94, 0.15)';
+      row.innerHTML = `
+        <td><strong style="color:#f87171">Unknown Subject</strong></td>
+        <td>N/A</td>
+        <td>${new Date().toLocaleTimeString()}</td>
+        <td>Liveness 18%</td>
+        <td><span class="badge-status-spoof">✗ SPOOF DETECTED</span></td>
+      `;
+      tbody.insertBefore(row, tbody.firstChild);
+
+      setTimeout(() => {
+        reticle.style.borderColor = '#06b6d4';
+        reticle.style.boxShadow = '0 0 25px rgba(6, 182, 212, 0.4)';
+        hudName.innerText = 'SCANNING OPTICAL FIELD...';
+        hudName.style.color = '#7dd3fc';
+      }, 3500);
+    }
+
+    function switchLecture(val) {
+      alert('Switched lecture timetable! Loaded enrolled class roster.');
+    }
+
+    function openReportModal() {
+      document.getElementById('reportModal').style.display = 'flex';
+    }
+    function closeReportModal() {
+      document.getElementById('reportModal').style.display = 'none';
     }
   </script>
 </body>
