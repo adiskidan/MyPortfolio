@@ -16,7 +16,7 @@ export const personalInfo = {
   avatarUrl: "/adis-image.png",
   bio: "I am a passionate fourth-year Computer Science student at Debre Berhan University, specializing in Web Development with additional experience in mobile and desktop applications. I love creating innovative solutions that solve real-world problems and contribute to the tech ecosystem in Ethiopia.",
   github: "https://github.com/adiskidan",
-  linkedin: "https://linkedin.com/in/adiskidan",
+  linkedin: "https://www.linkedin.com/in/adiskidan",
   telegram: "https://t.me/Rice_1219",
   twitter: "https://twitter.com/adiskidan",
   resumeUrl: "/resume.pdf", // Link to downloadable resume PDF

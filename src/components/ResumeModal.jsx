@@ -320,7 +320,7 @@ export default function ResumeModal({ isOpen, onClose }) {
                       className="inline-flex items-center gap-1 text-slate-400 hover:text-cyan-400 font-mono"
                     >
                       <LinkedinIcon className="w-3 h-3" />
-                      linkedin.com/in/adiskidan
+                      www.linkedin.com/in/adiskidan
                     </a>
                   </div>
                 </div>
