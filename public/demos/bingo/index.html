@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Standard Ethiopian Bingo Business System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>ኢትዮ ቢንጎ ቢዝነስ ሲስተም</h1>
+    
+    <!-- የገንዘብ እና ተጫዋቾች መቆጣጠሪያ -->
+    <div class="control-panel">
+        <div class="info-box">
+            <span>ተጫዋቾች:</span>
+            <strong id="player-count">0</strong>
+        </div>
+        <div class="info-box">
+            <span>የቤት ድርሻ (20%):</span>
+            <strong id="house-cut">0 ብር</strong>
+        </div>
+        <div class="info-box">
+            <span>ለአሸናፊው የሚገባው:</span>
+            <strong id="winner-pool" style="color: #c0392b;">0 ብር</strong>
+        </div>
+    </div>
+
+    <!-- የቁጥር መጥሪያ ክፍል -->
+    <div class="caller-section">
+        <div id="current-number">-</div>
+        <div>
+            <button onclick="drawNumber()" class="btn-primary">ቁጥር አውጣ (Draw)</button>
+            <button onclick="resetGame()" class="btn-danger">አዲስ ጨዋታ (Reset)</button>
+        </div>
+    </div>
+
+    <!-- አሸናፊ ማረጋገጫ (1 - 10) -->
+    <div class="card-section">
+        <h3>አሸናፊ ማረጋገጫ (Bingo Verification)</h3>
+        <p style="font-size: 13px; color: #555;">የካርቴላ ቁጥር ከ 1 እስከ 10 አስገባና አረጋግጥ</p>
+        <div class="input-group">
+            <input type="number" id="card-number-input" min="1" max="10" placeholder="ካርቴላ ቁጥር (1 - 10)">
+            <button onclick="verifyCard()" class="btn-secondary">አረጋግጥ (Check)</button>
+        </div>
+        <div id="verification-result" class="verification-box">
+            እባክህ የካርቴላ ቁጥር አስገባ
+        </div>
+    </div>
+
+    <!-- የጨዋታ ህጎች -->
+    <div class="rules-section">
+        <h4>የጨዋታ ህጎች:</h4>
+        <ul>
+            <li>1ኛ ዙር: አንድ መስመር (One Line)</li>
+            <li>2ኛ ዙር: ሁለት መስመር (Two Lines)</li>
+            <li>3ኛ ዙር: ሶስት መስመር / ሙሉ ቤት (Three Lines / Full House)</li>
+        </ul>
+    </div>
+
+    <!-- የወጡ ቁጥሮች ሰሌዳ (1 - 75) -->
+    <h3>የወጡ ቁጥሮች ሰሌዳ (1 - 75)</h3>
+    <div class="board" id="board">
+        <!-- Master board cells -->
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,161 @@
+/* GENERAL RESET */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    line-height: 1.6;
+}
+
+/* HEADER */
+header {
+    background-color: rgba(46,125,50,0.9);
+    color: white;
+    padding: 15px;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+header nav ul li {
+    margin: 0 15px;
+}
+
+header nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+header nav ul li a:hover, 
+header nav ul li a.active {
+    text-decoration: underline;
+    color: #ffeb3b;
+}
+
+/* HOME SECTION WITH IMAGE */
+.home-section {
+    height: 60vh;
+    background: url('images.jpg') no-repeat center center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+    position: relative;
+}
+
+.home-section .overlay {
+    background-color: rgba(0,0,0,0.5);
+    padding: 40px;
+    border-radius: 10px;
+}
+
+.home-section button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #2e7d32;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.home-section button:hover {
+    background-color: #1b5e20;
+}
+
+/* SECTIONS */
+section {
+    padding: 30px;
+    margin: 20px auto;
+    max-width: 700px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+/* FORMS */
+form label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+form input, form select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+}
+
+form button {
+    padding: 10px 15px;
+    background-color: #2e7d32;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+form button:hover {
+    background-color: #1b5e20;
+}
+
+/* CARDS */
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.card {
+    background-color: #e8f5e9;
+    border-radius: 10px;
+    padding: 15px;
+    flex: 1 1 calc(50% - 20px);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.card h4 {
+    margin-bottom: 8px;
+}
+
+.card-price {
+    background-color: #fff3e0;
+}
+
+/* PROFIT OUTPUT */
+.profit-output {
+    font-weight: bold;
+    margin-top: 15px;
+    font-size: 1.2em;
+}
+
+/* BUYER LIST */
+#buyerList li {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+    header nav ul {
+        flex-direction: column;
+    }
+    .card-container {
+        flex-direction: column;
+    }
+}
