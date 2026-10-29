@@ -6,7 +6,6 @@ import {
   Check, 
   MapPin, 
   MessageSquare, 
-  Sparkles,
   ExternalLink,
   CheckCircle2
 } from 'lucide-react';
@@ -280,16 +279,6 @@ export default function Contact() {
                 <div>
                   <span className={`text-xs block ${isBright ? 'text-slate-500' : 'text-slate-400'}`}>Based in</span>
                   <span className={`font-medium ${isBright ? 'text-slate-800' : 'text-white'}`}>{personalInfo.location} (Debre Berhan / Addis Ababa)</span>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-3 text-sm">
-                <div className={`p-2 rounded-lg ${isBright ? 'bg-emerald-50 text-emerald-600' : 'bg-slate-800 text-emerald-400'}`}>
-                  <Sparkles className="w-4 h-4" />
-                </div>
-                <div>
-                  <span className={`text-xs block ${isBright ? 'text-slate-500' : 'text-slate-400'}`}>Current Status</span>
-                  <span className="font-semibold text-emerald-600 dark:text-emerald-400">Open to Internships &amp; Roles</span>
                 </div>
               </div>
             </div>
