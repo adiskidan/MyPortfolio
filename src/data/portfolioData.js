@@ -160,7 +160,7 @@ export const projectsData = [
     image: "/projects/face-recognition-cover.jpg",
     tags: ["Python", "Flask", "OpenCV", "YuNet / SFace ONNX", "SQLite", "ReportLab PDF", "HTML5/CSS3"],
     github: "https://github.com/adiskidan/face-recognition-attendance",
-    liveDemo: "http://localhost:5000",
+    liveDemo: "/demos/face-recognition/index.html",
     featured: true,
     highlights: [
       "High-speed YuNet face detector with 128-D SFace facial embeddings matching",
@@ -178,7 +178,7 @@ export const projectsData = [
     image: "/projects/hulu-video-cover.jpg",
     tags: ["Node.js", "Express", "Chapa Checkout API", "JavaScript", "REST APIs", "Fintech"],
     github: "https://github.com/adiskidan/hulu-video-store",
-    liveDemo: "http://localhost:3000",
+    liveDemo: "/demos/hulu-video/index.html",
     featured: true,
     highlights: [
       "Integrated Chapa Payment Gateway supporting ETB and USD transactions",

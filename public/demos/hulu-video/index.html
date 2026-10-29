@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hulu Video Store & Chapa Checkout — Live Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{--ink:#171a16;--paper:#f5f3ed;--green:#c5e478;--muted:#85877f;--line:#deded5;--serif:'Playfair Display',Georgia,serif;--sans:'DM Sans',Arial,sans-serif}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+    
+    .portfolio-banner{background:#0b1120;color:#38bdf8;padding:10px 20px;font-size:12px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #1e293b}
+    .portfolio-banner a{color:#38bdf8;font-weight:700;text-decoration:none;display:flex;align-items:center;gap:6px}
+    .portfolio-banner a:hover{text-decoration:underline}
+    .portfolio-badge{background:rgba(56,189,248,0.15);padding:3px 8px;border-radius:4px;color:#7dd3fc;font-size:10px;font-family:monospace}
+
+    .topbar{height:78px;display:flex;align-items:center;justify-content:space-between;padding:0 6.1%;background:var(--paper);position:relative;z-index:2;border-bottom:1px solid var(--line)}
+    .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-size:14px;font-weight:700;letter-spacing:.14em}
+    .brand-mark{width:28px;height:28px;display:grid;place-items:center;background:var(--green);border-radius:50%;font-family:var(--serif);font-style:italic;font-size:17px;letter-spacing:0}
+    .brand-dot,.accent{color:#89a950}
+    .topbar nav{display:flex;gap:30px}
+    .topbar nav a,.nav-cta{font-size:12px;color:var(--ink);text-decoration:none;font-weight:500}
+    .nav-cta{background:var(--ink);color:white;padding:8px 16px;border-radius:4px}
+    .nav-cta:hover{background:#30342d}
+
+    .hero{background:var(--ink);color:white;position:relative;display:grid;grid-template-columns:1.2fr 1fr;padding:60px 6.1%;gap:40px;overflow:hidden}
+    .hero-copy{display:flex;flex-direction:column;justify-content:center}
+    .eyebrow{font-size:10px;letter-spacing:.19em;font-weight:700;display:flex;align-items:center;gap:11px;color:#aeb0a6}
+    .eyebrow-line{display:inline-block;width:24px;height:2px;background:var(--green)}
+    .hero h1{font-family:var(--serif);font-size:clamp(40px,5vw,68px);line-height:1.05;margin:20px 0 15px;letter-spacing:-.03em}
+    .accent{font-style:italic;color:var(--green)}
+    .hero-copy>p{font-size:14px;line-height:1.8;color:#cbd5e1;max-width:440px;margin:0 0 25px}
+    .hero-actions{display:flex;gap:15px;align-items:center}
+    .btn-chapa{background:var(--green);color:var(--ink);padding:12px 24px;border-radius:4px;font-weight:700;text-decoration:none;font-size:12px;display:inline-flex;align-items:center;gap:8px}
+    .btn-chapa:hover{filter:brightness(1.05)}
+
+    .hero-art{position:relative;min-height:300px;border-radius:12px;overflow:hidden;background:#1e293b url('https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1200&q=85') center/cover}
+    .art-badge{position:absolute;top:16px;left:16px;background:rgba(0,0,0,0.7);padding:6px 12px;border-radius:6px;font-size:11px;color:var(--green);font-weight:700;backdrop-blur:md}
+
+    .catalog{padding:60px 6.1%}
+    .section-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:30px}
+    .section-head h2{font-family:var(--serif);font-size:36px;margin:10px 0 0}
+    .filters{display:flex;gap:20px;border-bottom:1px solid var(--line);margin-bottom:30px}
+    .filter{font:600 12px var(--sans);color:#8b8c84;background:none;border:0;padding:0 0 12px;cursor:pointer;position:relative}
+    .filter.active{color:var(--ink)}
+    .filter.active:after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:2px;background:var(--ink)}
+
+    .film-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));gap:28px}
+    .film-card{background:white;border:1px solid var(--line);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s}
+    .film-card:hover{transform:translateY(-3px);box-shadow:0 12px 24px rgba(0,0,0,0.06)}
+    .poster{height:200px;background:#cbd5e1 center/cover no-repeat;position:relative}
+    .film-tag{position:absolute;top:10px;left:10px;padding:4px 8px;background:var(--paper);font-size:9px;font-weight:700;text-transform:uppercase;border-radius:4px}
+    .duration{position:absolute;bottom:10px;right:10px;background:rgba(0,0,0,0.7);color:white;font-size:10px;padding:3px 6px;border-radius:4px}
+    .film-content{padding:18px;display:flex;flex-direction:column;flex:1;justify-content:space-between}
+    .film-category{font-size:9px;color:#64748b;font-weight:700;text-transform:uppercase;letter-spacing:0.1em}
+    .film-title{font-family:var(--serif);font-size:20px;margin:6px 0 8px}
+    .film-description{color:#64748b;font-size:12px;line-height:1.6;margin:0 0 16px}
+    .card-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid #f1f5f9}
+    .price{font-size:14px;font-weight:700}
+    .btn-buy{padding:8px 14px;background:var(--ink);color:white;border:0;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:background .2s}
+    .btn-buy:hover{background:#334155}
+    .btn-free{background:var(--green);color:var(--ink)}
+
+    /* Checkout Modal */
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);display:none;align-items:center;justify-content:center;z-index:99;padding:20px}
+    .modal-box{background:white;width:100%;max-width:460px;border-radius:14px;padding:28px;box-shadow:0 25px 50px -12px rgba(0,0,0,0.25);position:relative}
+    .modal-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px}
+    .modal-head h3{font-family:var(--serif);font-size:24px;margin:0}
+    .close-btn{background:none;border:none;font-size:24px;cursor:pointer;color:#64748b}
+    .form-group{margin-bottom:14px}
+    .form-group label{display:block;font-size:11px;font-weight:700;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;color:#475569}
+    .form-group input{width:100%;padding:10px 12px;border:1px solid #cbd5e1;border-radius:6px;font-size:13px;outline:none}
+    .form-group input:focus{border-color:#0284c7}
+    .chapa-badge{background:#e0f2fe;color:#0369a1;padding:12px;border-radius:8px;font-size:11px;margin-bottom:18px;display:flex;align-items:center;gap:8px}
+    .btn-submit{width:100%;padding:12px;background:#0284c7;color:white;border:none;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer}
+    .btn-submit:hover{background:#0369a1}
+    .success-alert{display:none;background:#ecfdf5;border:1px solid #10b981;color:#065f46;padding:14px;border-radius:8px;font-size:12px;text-align:center;margin-top:14px}
+
+    @media(max-width:768px){
+      .hero{grid-template-columns:1fr;padding:40px 5%}
+      .topbar nav{display:none}
+      .catalog{padding:40px 5%}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar Linking back to Portfolio -->
+  <div class="portfolio-banner">
+    <a href="/#projects">← Return to Adis Kidan Portfolio</a>
+    <span class="portfolio-badge">Live Interactive Showcase Demo</span>
+  </div>
+
+  <header class="topbar">
+    <a class="brand" href="#"><span class="brand-mark">H</span><span>HULU VIDEO STORE<span class="brand-dot">.</span></span></a>
+    <nav>
+      <a href="#catalog">Film Catalog</a>
+      <a href="#about">About System</a>
+      <a href="https://chapa.co" target="_blank" rel="noopener noreferrer">Chapa Gateway ↗</a>
+    </nav>
+    <a class="nav-cta" href="#catalog">Browse Films <span>↓</span></a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="eyebrow-line"></span> ETHIOPIAN DIGITAL CINEMA &amp; STREAMING</div>
+        <h1>Stories that inspire<span class="accent">.</span></h1>
+        <p>A modern digital media marketplace built with Node.js, Express, and official Ethiopian Chapa Checkout integration supporting ETB &amp; USD payments.</p>
+        <div class="hero-actions">
+          <a class="btn-chapa" href="#catalog">Explore Storefront <span>→</span></a>
+        </div>
+      </div>
+      <div class="hero-art">
+        <div class="art-badge">Chapa Checkout API Integrated</div>
+      </div>
+    </section>
+
+    <section class="catalog" id="catalog">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow"><span class="eyebrow-line"></span> CURATED CATALOG</div>
+          <h2>Available Titles</h2>
+        </div>
+        <p style="color:#64748b;font-size:12px">Built by Adis Kidan &bull; Powered by Chapa Gateway</p>
+      </div>
+
+      <div class="filters">
+        <button class="filter active" onclick="filterFilms('all', this)">All Films (6)</button>
+        <button class="filter" onclick="filterFilms('free', this)">Free to Keep</button>
+        <button class="filter" onclick="filterFilms('paid', this)">Chapa Paid (ETB / USD)</button>
+      </div>
+
+      <div class="film-grid" id="filmGrid"></div>
+    </section>
+  </main>
+
+  <!-- Checkout Dialog -->
+  <div class="modal-overlay" id="checkoutModal">
+    <div class="modal-box">
+      <div class="modal-head">
+        <div>
+          <span style="font-size:10px;font-weight:700;color:#0284c7;letter-spacing:0.1em;text-transform:uppercase">CHAPA CHECKOUT DEMO</span>
+          <h3 id="modalFilmTitle">Get Film</h3>
+        </div>
+        <button class="close-btn" onclick="closeModal()">&times;</button>
+      </div>
+
+      <div class="chapa-badge">
+        <span>🔒</span>
+        <span>Secure Payment Gateway via Chapa (ETB / USD Instant Settlement)</span>
+      </div>
+
+      <form id="checkoutForm" onsubmit="handleCheckout(event)">
+        <div class="form-group">
+          <label>Your Full Name</label>
+          <input type="text" id="custName" required placeholder="e.g. Dawit Abebe">
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="custEmail" required placeholder="name@domain.com">
+        </div>
+        <div class="form-group">
+          <label>Amount Due</label>
+          <input type="text" id="custAmount" readonly style="background:#f1f5f9;font-weight:700">
+        </div>
+
+        <button type="submit" class="btn-submit" id="submitBtn">Simulate Chapa Checkout →</button>
+      </form>
+
+      <div class="success-alert" id="successBox">
+        <p><strong>Payment Authorized by Chapa!</strong></p>
+        <p style="margin:4px 0 0">Order ref: <code id="orderRef"></code></p>
+        <p style="margin-top:8px;font-size:11px">High-Definition Video stream has been unlocked for your account.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const films = [
+      {
+        id: "coastal-light",
+        title: "Coastal Light",
+        category: "Travel film",
+        description: "A quiet journey along the coast, filmed at sunrise with atmospheric 4K visuals.",
+        price: 0,
+        currency: "usd",
+        duration: "04:18",
+        poster: "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: "city-after-dark",
+        title: "City After Dark",
+        category: "Short film",
+        description: "One night, three strangers, and a neon-lit metropolis that never quite sleeps.",
+        price: 5.99,
+        currency: "usd",
+        duration: "18:42",
+        poster: "https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: "the-long-way-home",
+        title: "The Long Way Home",
+        category: "Documentary",
+        description: "A personal documentary about returning to the heritage and highlands of Ethiopia.",
+        price: 12.99,
+        currency: "usd",
+        duration: "42:06",
+        poster: "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: "open-water",
+        title: "Open Water",
+        category: "Nature film",
+        description: "A free short film capturing the biodiversity beneath the surface of the open sea.",
+        price: 0,
+        currency: "usd",
+        duration: "06:31",
+        poster: "https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: "treatment",
+        title: "Medical Treatment in Ethiopia",
+        category: "Health Documentary",
+        description: "Modern clinical advances and rural community health initiatives across Amhara regional clinics.",
+        price: 50.00,
+        currency: "etb",
+        duration: "09:59",
+        poster: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: "gbi-actor",
+        title: "Gbi Drama & Action",
+        category: "Drama",
+        description: "University campus theatrical performance and student cinema production by DBU creative arts.",
+        price: 0,
+        currency: "usd",
+        duration: "12:09",
+        poster: "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=800&q=80"
+      }
+    ];
+
+    let currentFilter = 'all';
+
+    function renderFilms() {
+      const grid = document.getElementById('filmGrid');
+      const filtered = films.filter(f => {
+        if (currentFilter === 'free') return f.price === 0;
+        if (currentFilter === 'paid') return f.price > 0;
+        return true;
+      });
+
+      grid.innerHTML = filtered.map(f => {
+        const isFree = f.price === 0;
+        const priceLabel = isFree ? 'FREE' : `${f.price} ${f.currency.toUpperCase()}`;
+        return `
+          <div class="film-card">
+            <div class="poster" style="background-image:url('${f.poster}')">
+              <span class="film-tag">${isFree ? 'Free to Keep' : 'Chapa Paid'}</span>
+              <span class="duration">${f.duration}</span>
+            </div>
+            <div class="film-content">
+              <div>
+                <span class="film-category">${f.category}</span>
+                <h3 class="film-title">${f.title}</h3>
+                <p class="film-description">${f.description}</p>
+              </div>
+              <div class="card-footer">
+                <span class="price">${priceLabel}</span>
+                <button 
+                  class="btn-buy ${isFree ? 'btn-free' : ''}" 
+                  onclick="openCheckout('${f.id}')"
+                >
+                  ${isFree ? 'Watch / Download ↓' : 'Pay with Chapa ↗'}
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function filterFilms(type, btn) {
+      currentFilter = type;
+      document.querySelectorAll('.filter').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderFilms();
+    }
+
+    function openCheckout(filmId) {
+      const film = films.find(f => f.id === filmId);
+      if (!film) return;
+      document.getElementById('modalFilmTitle').innerText = film.title;
+      document.getElementById('custAmount').value = film.price === 0 ? 'Free ($0.00)' : `${film.price} ${film.currency.toUpperCase()}`;
+      document.getElementById('successBox').style.display = 'none';
+      document.getElementById('checkoutForm').style.display = 'block';
+      document.getElementById('checkoutModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('checkoutModal').style.display = 'none';
+    }
+
+    function handleCheckout(e) {
+      e.preventDefault();
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.innerText = 'Connecting to Chapa...';
+      submitBtn.disabled = true;
+
+      setTimeout(() => {
+        submitBtn.innerText = 'Verifying Settlement...';
+        setTimeout(() => {
+          submitBtn.disabled = false;
+          submitBtn.innerText = 'Simulate Chapa Checkout →';
+          document.getElementById('checkoutForm').style.display = 'none';
+          document.getElementById('orderRef').innerText = 'CHP_' + Math.random().toString(36).substring(2, 10).toUpperCase();
+          document.getElementById('successBox').style.display = 'block';
+        }, 800);
+      }, 700);
+    }
+
+    renderFilms();
+  </script>
+</body>
+</html>
