@@ -150,7 +150,7 @@ export default function Contact() {
     )}&su=${encodeURIComponent(subjectText)}&body=${encodeURIComponent(formattedBody)}`;
 
     const telegramText = `Hi Adis, my name is ${formData.name.trim()} (${formData.email.trim()}):\n${formData.message.trim()}`;
-    const telegramUrl = `https://t.me/adiskidan?text=${encodeURIComponent(telegramText)}`;
+    const telegramUrl = `${personalInfo.telegram}?text=${encodeURIComponent(telegramText)}`;
 
     const mailtoUrl = `mailto:${personalInfo.email}?subject=${encodeURIComponent(
       subjectText
