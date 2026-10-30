@@ -18,7 +18,6 @@ export const personalInfo = {
   github: "https://github.com/adiskidan",
   linkedin: "https://www.linkedin.com/in/adiskidan",
   telegram: "https://t.me/Rice_1219",
-  tiktok: "https://www.tiktok.com/@adiskidan",
   twitter: "https://twitter.com/adiskidan",
   resumeUrl: "/resume.pdf", // Link to downloadable resume PDF
   resumeLabel: "PDF hosted on Google Drive",

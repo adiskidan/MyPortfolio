@@ -9,7 +9,7 @@ import {
   ExternalLink,
   CheckCircle2
 } from 'lucide-react';
-import { GithubIcon, LinkedinIcon, TelegramIcon, TikTokIcon } from './Icons';
+import { GithubIcon, LinkedinIcon, TelegramIcon } from './Icons';
 import { personalInfo } from '../data/portfolioData';
 import { useTheme } from '../context/ThemeContext';
 
@@ -330,21 +330,7 @@ export default function Contact() {
                   <TelegramIcon className="w-4 h-4 text-cyan-500" />
                   <span>Telegram</span>
                 </a>
-                {personalInfo.tiktok && (
-                  <a
-                    href={personalInfo.tiktok}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-medium border transition-all ${
-                      isBright 
-                        ? 'bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-700' 
-                        : 'bg-slate-900 border-slate-800 hover:border-cyan-500/40 text-slate-300 hover:text-white'
-                    }`}
-                  >
-                    <TikTokIcon className="w-4 h-4 text-cyan-500" />
-                    <span>TikTok</span>
-                  </a>
-                )}
+
               </div>
             </div>
           </div>

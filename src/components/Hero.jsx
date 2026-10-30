@@ -10,7 +10,7 @@ import {
   Sun,
   Layers
 } from 'lucide-react';
-import { GithubIcon, LinkedinIcon, TelegramIcon, TikTokIcon } from './Icons';
+import { GithubIcon, LinkedinIcon, TelegramIcon } from './Icons';
 import { personalInfo } from '../data/portfolioData';
 import { useTheme } from '../context/ThemeContext';
 import ResumeModal from './ResumeModal';
@@ -244,21 +244,6 @@ export default function Hero() {
                   <span>Telegram</span>
                 </a>
 
-                {personalInfo.tiktok && (
-                  <a
-                    href={personalInfo.tiktok}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-sm border transition-all hover:-translate-y-0.5 shadow-md ${
-                      isBright 
-                        ? 'bg-white hover:bg-slate-50 text-slate-800 border-slate-300 hover:border-cyan-500/50 shadow-slate-200' 
-                        : 'bg-[#0e172a] hover:bg-[#152342] text-slate-200 hover:text-white border-slate-700/80 hover:border-cyan-500/40 shadow-black/20'
-                    }`}
-                  >
-                    <TikTokIcon className="w-4 h-4 text-cyan-400" />
-                    <span>TikTok</span>
-                  </a>
-                )}
 
                 <button
                   onClick={handleCopyEmail}
