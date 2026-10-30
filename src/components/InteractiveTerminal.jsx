@@ -120,7 +120,8 @@ Key Modules: ${educationData[0].coursework.slice(0, 4).join(', ')}`;
         response = `Email:    ${personalInfo.email}
 GitHub:   ${personalInfo.github}
 LinkedIn: ${personalInfo.linkedin}
-Telegram: ${personalInfo.telegram}`;
+Telegram: ${personalInfo.telegram}
+TikTok:   ${personalInfo.tiktok || 'https://www.tiktok.com/@adiskidan'}`;
         break;
 
       case 'whoami':
